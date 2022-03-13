@@ -14,7 +14,7 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
     @IBOutlet weak var loadedView: UIImageView!
     
     /* FIXME: Hard coding on selectedImage */
-    var selectedImage: String = "idk.png"
+    var selectedImage: String = "shunproject.png"
     var documentsUrl: URL {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     }
