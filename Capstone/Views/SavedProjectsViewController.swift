@@ -30,15 +30,15 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
                 appropriateFor: nil,
                 create: true
             )
-            print("documentDirectory", documentDirectory.path)
+            //print("documentDirectory", documentDirectory.path)
             // Get the directory contents urls (including subfolders urls)
             let directoryContents = try FileManager.default.contentsOfDirectory(
                 at: documentDirectory,
                 includingPropertiesForKeys: nil
             )
-            print("directoryContents:", directoryContents.map { $0.localizedName ?? $0.lastPathComponent })
+            //print("directoryContents:", directoryContents.map { $0.localizedName ?? $0.lastPathComponent })
             for url in directoryContents {
-                print(url.localizedName ?? url.lastPathComponent)
+                //print(url.localizedName ?? url.lastPathComponent)
                 //try FileManager.default.removeItem(at: url)
             }
             
@@ -47,7 +47,7 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
                 url.hasHiddenExtension = true
             }
             for url in directoryContents {
-                print(url.localizedName ?? url.lastPathComponent)
+                //print(url.localizedName ?? url.lastPathComponent)
             }
 
             // if you want to get all png files located at the documents directory:
@@ -79,7 +79,12 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
 
         for item in items {
             //print(item)
-            fileArray.append(item)
+            let _item  = item.suffix(3)
+            if _item == "png" {
+                fileArray.append(item)
+            } else {
+                print("Not a png")
+            }
         }
         
         /* Set Array to Alphabetical and Numerical Order */
@@ -140,49 +145,22 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.deselectRow(at: indexPath, animated: true)
 
         let row = indexPath.row
+        self.tryfile = fileArray[row]
         print("User selected: \(fileArray[row])")
-        
-        //if let vc = storyboard?.instantiateViewController(withIdentifier: "LoadedView") as? LoadedProjectViewController {
-        //    vc.selectedImage = fileArray[row]
-        //    navigationController?.pushViewController(vc, animated: true)
-        //}
-        
-        //NewProjectViewController().update(file: fileArray[row])
-        //getImage(fileArray[row])
-        
-        
-        
-        //NewProjectViewController()._projectName = fileArray[row]
-        // let image = UIImage(contentsOfFile: fileArray[row])
-        //NewProjectViewController()._projectName = fileArray[row]
-    
-        //NewProjectViewController().projectName = fileArray[row]
-        //NewProjectViewController().imageView.contentMode = .scaleAspectFit
-        //NewProjectViewController().imageView.image = image
-        
-        
         
     }
     
-    /* FIXME: Part of the attempt to overwrite (Won't work)
-    func getImage(_ imageName: String){
-        let fileManager = FileManager.default
-        //let imagePAth = (.getDirectoryPath() as NSString).stringByAppendingPathComponent("\(imageName)")
-        let path = FileManager
-            .default
-            .urls(for: .documentDirectory, in: .userDomainMask)
-            .first?
-            .appendingPathComponent("\(imageName)")
-        //if !fileManager.fileExists(atPath: path){
-        //    print("No Image")
-        //} else {
-        let pathString = path?.path // String
-        NewProjectViewController().image = UIImage(contentsOfFile: pathString!) ?? UIImage()
-        //NewProjectViewController().imageView.contentMode = .scaleAspectFit
-        //NewProjectViewController().imageView.image = NewProjectViewController().image
-        //NewProjectViewController().imageView.contentMode = .scaleAspectFit
-        //}
-    }*/
+    @IBAction func editBTN(_ sender: Any) {
+        self.performSegue(withIdentifier: "LoadedView", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if(segue.identifier == "LoadedView"){
+            let vc = segue.destination as! LoadedProjectViewController
+            vc.selectedImage = self.tryfile
+        }
+    }
     
 }
 

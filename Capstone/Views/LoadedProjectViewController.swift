@@ -14,7 +14,7 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
     @IBOutlet weak var loadedView: UIImageView!
     
     /* FIXME: Hard coding on selectedImage */
-    var selectedImage: String = "shunproject.png"
+    var selectedImage = ""
     var documentsUrl: URL {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
     }
@@ -23,8 +23,9 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
         super.viewDidLoad()
         /* FIXME: Nothing Loads correctly :') */
         let loadedImage = load(fileName: selectedImage)
+        loadedView.contentMode = .scaleAspectFit
         loadedView.image = loadedImage
-        loadedView.image = UIImage(named: "test")
+        //loadedView.image = UIImage(named: "test")
         // Do any additional setup after loading the view.
         print("Select: \(String(describing: selectedImage))")
         
@@ -52,35 +53,4 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
         }
         return nil
     }
-
-/*        //imageView.image = loadImageFromDocumentDirectory(fileName: selectedImage)
-        //print("NO NIL: \(loadImageFromDocumentDirectory(fileName: selectedImage))")
-        
-        let nsDocumentDirectory = FileManager.SearchPathDirectory.documentDirectory
-        let nsUserDomainMask    = FileManager.SearchPathDomainMask.userDomainMask
-        let paths               = NSSearchPathForDirectoriesInDomains(nsDocumentDirectory, nsUserDomainMask, true)
-        if let dirPath          = paths.first
-        {
-            let imageURL = URL(fileURLWithPath: dirPath).appendingPathComponent("project.png")
-            loadedView.image = UIImage(contentsOfFile: imageURL.path)
-            print(imageURL)
-            // Do whatever you want with the image
-            //loadedView.image = UIImage(named: "test")
-        }
-        
-        
-
-    }
-    
-    func loadImageFromDocumentDirectory(fileName: String) -> UIImage? {
-
-            let documentsUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!;
-            let fileURL = documentsUrl.appendingPathComponent("project.png")
-            do {
-                let imageData = try Data(contentsOf: fileURL)
-                return UIImage(data: imageData)
-            } catch {}
-            return UIImage(named: "test")
-        }*/
-
 }

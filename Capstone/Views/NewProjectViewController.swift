@@ -13,12 +13,39 @@ class LocalFileManager {
     
     static let instance = LocalFileManager()
     
-    func saveImage(image: UIImage, _ imageName: String,_ annotations: Dictionary<String, Array<Dictionary<String, CGFloat>>> ) {
+    /* FIXME: Change func name to saveProject */
+    func saveImage(_ image: UIImage, _ imageName: String,_ annotations: Dictionary<String, Array<Dictionary<String, CGFloat>>> ) {
+
+        let bluePrint = image.pngData()
+        let path = documentDirectoryPath("\(imageName).png")
+        do {
+            try
+            bluePrint?.write(to: path!)
+            print("Success")
+        } catch let error {
+            print("Error saving. \(error)")
+        }
+    }
+    func documentDirectoryPath(_ imageName : String) -> URL? {
+        let path = FileManager.default.urls(for: .documentDirectory,
+                                               in: .userDomainMask).first?.appendingPathComponent("\(imageName)")
+        return path
+    }
         
+        /* FIXME: Writing to .txt file of annotes */
+ /*       let fname : String = "\(imageName).txt"
+        let fileName = getPathFor(imageName: fname)
+        do {
+            try annotations.writeToURL(fileName!)
+        } catch {
+            print("Error saving, \(error)")
+        }
+        
+        /* FIXME: Writing to document directory of png image */
         let blueprintImage = image.pngData()
         let dictionary = annotations
         //print("Debug: \(imageName)")
-        let path = getPathFor(imageName: imageName)
+        let path = getPathFor(imageName: "\(imageName).png")
         
         do {
             try
@@ -42,7 +69,7 @@ class LocalFileManager {
                     return nil
                 }
         return path
-    }
+    }*/
 }
 
 class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
@@ -52,7 +79,9 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     @IBOutlet weak var projectName: UITextField!
     @IBOutlet weak var projectNameHeader: UILabel!
     
-    public var image: UIImage = UIImage()
+    //public var image: UIImage = UIImage()
+    //var image:UIImage? = nil
+    var globalImage:UIImage? = nil
     
     let manager = LocalFileManager.instance
      
@@ -121,14 +150,14 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
         }
     }
     
-    /* saveButtonPressed doesn't save yet, but loads the (uncompleted) 'SavedProjects' view and prints to the counsole of what was saved in File*/
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         _projectName = projectName.text!
         projectNameHeader.text = _projectName
         _projectName = _projectName.trimmingCharacters(in: .whitespaces)
         
         if (_projectName != "" && saved == false){
-            manager.saveImage(image: image, "\(_projectName).png", annotes)
+            //print("\(image) , \(_projectName) , \(annotes)")
+            manager.saveImage(globalImage!, "\(_projectName)", annotes)
             print(_projectName)
             saved = true
         }
@@ -181,15 +210,10 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
             
             imageView.contentMode = .scaleAspectFit
             imageView.image = image
-            
-            // Create a context of the starting image size and set it as the current one
-            //UIGraphicsBeginImageContext(image.size)
-            
-            // Draw the starting image in the current context as background
-            //image.draw(at: CGPoint.zero)
-
-            
+            //manager.saveImage(image, "\(_projectName)", annotes)
+            globalImage = image
         }
+        //manager.saveImage(image!, "\(_projectName)", annotes)
         
         picker.dismiss(animated: true, completion: nil)
     }
