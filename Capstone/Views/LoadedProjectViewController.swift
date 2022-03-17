@@ -13,6 +13,13 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
 
     @IBOutlet weak var loadedView: UIImageView!
     
+    
+    var saved = false
+    var uploaded = true
+    public var _projectName: String = ""
+    public var annotes : Dictionary<String, Array<Dictionary<String, CGFloat>>> = ["accesspoint": [[:]]]
+    public var myArray = [Dictionary<String, CGFloat>]()
+    
     /* FIXME: Hard coding on selectedImage */
     var selectedImage = ""
     var documentsUrl: URL {
@@ -52,5 +59,32 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
             print("Error loading image : \(error)")
         }
         return nil
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            if uploaded != false {
+            // Set the Center of the Circle
+            let circleCenter = touch.location(in: view)
+            let dict = ["x": circleCenter.x, "y": circleCenter.y]
+            
+            myArray.append(dict)
+            
+            annotes = ["accesspoint": myArray]
+            
+            print("Annotes: ", annotes)
+            
+            // Set a Circle Radius
+            let circleWidth = CGFloat(25)
+            let circleHeight = circleWidth
+                
+            // Create a new CircleView
+            // 3
+            let circleView = CircleView(frame: CGRect(x: circleCenter.x, y: circleCenter.y, width: circleWidth, height: circleHeight))
+            view.addSubview(circleView)
+            }
+        }
+        saved = false
+        print("touch")
     }
 }

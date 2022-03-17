@@ -38,7 +38,7 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
             )
             //print("directoryContents:", directoryContents.map { $0.localizedName ?? $0.lastPathComponent })
             for url in directoryContents {
-                //print(url.localizedName ?? url.lastPathComponent)
+                print(url.localizedName ?? url.lastPathComponent)
                 //try FileManager.default.removeItem(at: url)
             }
             
@@ -72,7 +72,7 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
         } catch  { print(error) } */
         
         // /var/mobile/Containers/Data/Application/A1916161-D3BC-4613-8FAA-FE16A0C37DFD/Documents
-         let fileMngr = FileManager.default
+        let fileMngr = FileManager.default
         //let path = Bundle.main.resourcePath!
         let docs = fileMngr.urls(for: .documentDirectory, in: .userDomainMask)[0].path
         let items = try! fileMngr.contentsOfDirectory(atPath:docs)
@@ -153,6 +153,20 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
     @IBAction func editBTN(_ sender: Any) {
         self.performSegue(withIdentifier: "LoadedView", sender: self)
     }
+    
+    @IBAction func deleteBTN(_ sender: Any) {
+        let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let fileURL = URL(fileURLWithPath: tryfile, relativeTo: directoryURL)
+        do {
+            try FileManager.default.removeItem(at: fileURL)
+            print("Delete \(tryfile)")
+        } catch {
+            // Catch any errors
+            print(error.localizedDescription)
+        }
+        
+    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         

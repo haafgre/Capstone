@@ -152,7 +152,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         _projectName = projectName.text!
-        projectNameHeader.text = _projectName
+        //projectNameHeader.text = _projectName
         _projectName = _projectName.trimmingCharacters(in: .whitespaces)
         
         if (_projectName != "" && saved == false){

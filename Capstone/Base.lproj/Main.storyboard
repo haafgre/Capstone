@@ -147,18 +147,6 @@
                                     <segue destination="BYZ-38-t0r" kind="show" id="6Uf-vE-MXx"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nz0-Cv-6mn">
-                                <rect key="frame" x="112" y="8" width="159" height="28"/>
-                                <attributedString key="attributedText">
-                                    <fragment content="Untitled Project">
-                                        <attributes>
-                                            <font key="NSFont" metaFont="system" size="24"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="KLp-V8-6w3"/>
                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
@@ -167,10 +155,7 @@
                             <constraint firstItem="t7z-xQ-I5w" firstAttribute="top" secondItem="xMv-Uq-Qwg" secondAttribute="top" constant="25" id="2Fh-wE-pU1"/>
                             <constraint firstItem="Zdd-IE-M2z" firstAttribute="top" secondItem="xMv-Uq-Qwg" secondAttribute="top" constant="25" id="3ZQ-YO-77w"/>
                             <constraint firstItem="d2e-Dd-qNk" firstAttribute="leading" secondItem="GzM-L7-TDJ" secondAttribute="trailing" constant="20" id="6Ag-hw-HfO"/>
-                            <constraint firstItem="KLp-V8-6w3" firstAttribute="top" secondItem="nz0-Cv-6mn" secondAttribute="bottom" constant="8" symbolic="YES" id="A7f-5F-PG7"/>
                             <constraint firstItem="Zdd-IE-M2z" firstAttribute="leading" secondItem="GzM-L7-TDJ" secondAttribute="trailing" constant="20" id="KnB-HW-gD8"/>
-                            <constraint firstItem="nz0-Cv-6mn" firstAttribute="centerY" secondItem="NdS-LT-WVQ" secondAttribute="centerY" id="Mwk-Rl-cqD"/>
-                            <constraint firstItem="nz0-Cv-6mn" firstAttribute="leading" secondItem="RRo-5a-gWC" secondAttribute="trailing" constant="39.5" id="NVa-Bg-Vo9"/>
                             <constraint firstItem="NdS-LT-WVQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="RRo-5a-gWC" secondAttribute="trailing" constant="8" symbolic="YES" id="PHL-0v-RAm"/>
                             <constraint firstItem="GzM-L7-TDJ" firstAttribute="top" secondItem="NdS-LT-WVQ" secondAttribute="bottom" constant="6" id="UIC-J6-YC7"/>
                             <constraint firstItem="RRo-5a-gWC" firstAttribute="leading" secondItem="xMv-Uq-Qwg" secondAttribute="leading" constant="20" id="Vto-if-iaT"/>
@@ -185,7 +170,6 @@
                             <constraint firstItem="KLp-V8-6w3" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="d2e-Dd-qNk" secondAttribute="trailing" symbolic="YES" id="t4C-V7-EV2"/>
                             <constraint firstAttribute="trailing" secondItem="t7z-xQ-I5w" secondAttribute="trailing" constant="20" id="vo0-sr-ozW"/>
                             <constraint firstAttribute="trailing" secondItem="NdS-LT-WVQ" secondAttribute="trailing" constant="295" id="vz9-ZJ-wEz"/>
-                            <constraint firstItem="NdS-LT-WVQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="nz0-Cv-6mn" secondAttribute="trailing" constant="8" symbolic="YES" id="xG0-QC-WB5"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="l5E-0w-ilk"/>
@@ -193,7 +177,6 @@
                     <connections>
                         <outlet property="imageView" destination="ZHh-hb-O22" id="for-qh-jZF"/>
                         <outlet property="projectName" destination="NdS-LT-WVQ" id="xWZ-Lr-hHI"/>
-                        <outlet property="projectNameHeader" destination="nz0-Cv-6mn" id="kFx-5P-28v"/>
                         <outlet property="projectSave" destination="t7z-xQ-I5w" id="BLB-g5-baz"/>
                     </connections>
                 </viewController>
@@ -210,23 +193,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="piv-0I-jfC">
-                                <rect key="frame" x="20" y="49" width="374" height="748"/>
+                                <rect key="frame" x="20" y="94" width="374" height="703"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <button key="tableHeaderView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="bSe-W8-xGn">
-                                    <rect key="frame" x="0.0" y="0.0" width="374" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="374" height="48"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" name="AccentColor"/>
+                                    <color key="backgroundColor" red="1" green="0.4123486428" blue="0.116163034" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                    <state key="normal" title="Edit Project"/>
+                                    <state key="normal" title="Delete Project"/>
                                     <connections>
-                                        <action selector="editBTN:" destination="Uet-1M-Q8o" eventType="touchUpInside" id="bIa-q8-v8U"/>
-                                        <segue destination="bDw-rn-yhQ" kind="show" identifier="LoadedView" id="V2m-cZ-Xqt"/>
+                                        <action selector="deleteBTN:" destination="Uet-1M-Q8o" eventType="touchUpInside" id="8Iz-Ze-p7A"/>
                                     </connections>
                                 </button>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="MyCell" id="VcN-at-Iyp">
-                                        <rect key="frame" x="0.0" y="88.5" width="374" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="92.5" width="374" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VcN-at-Iyp" id="1bO-Oe-mLB">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
@@ -238,6 +220,17 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kRC-k4-1L1">
+                                <rect key="frame" x="20" y="42" width="374" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" name="AccentColor"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Edit Project"/>
+                                <connections>
+                                    <action selector="editBTN:" destination="Uet-1M-Q8o" eventType="touchUpInside" id="Yn4-Ul-frb"/>
+                                    <segue destination="bDw-rn-yhQ" kind="show" identifier="LoadedView" id="L27-Do-9v6"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="qGM-MH-DJQ"/>
                         <color key="backgroundColor" systemColor="systemYellowColor"/>
@@ -249,7 +242,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bdx-Ze-IPB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="951" y="50"/>
+            <point key="canvasLocation" x="1055" y="50"/>
         </scene>
         <!--Loaded Project View Controller-->
         <scene sceneID="MyA-ew-Mjd">
@@ -290,8 +283,13 @@
                                 <state key="normal" title="Back" image="chevron.backward" catalog="system">
                                     <color key="titleColor" systemColor="systemBlueColor"/>
                                 </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OU1-ln-2kd">
+                                <rect key="frame" x="842" y="15" width="34" height="30"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Save"/>
                                 <connections>
-                                    <segue destination="Uet-1M-Q8o" kind="show" id="qBH-Vi-AGb"/>
+                                    <action selector="saveButtonPressed:" destination="zJV-MV-YMB" eventType="touchUpInside" id="MSc-ix-Res"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -299,13 +297,16 @@
                         <color key="backgroundColor" systemColor="systemRedColor"/>
                         <constraints>
                             <constraint firstItem="zII-W8-vZV" firstAttribute="top" secondItem="Q87-i5-xUy" secondAttribute="top" constant="15" id="4Qg-e3-yMx"/>
+                            <constraint firstItem="OU1-ln-2kd" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zII-W8-vZV" secondAttribute="trailing" constant="8" symbolic="YES" id="B6t-vC-7Qc"/>
                             <constraint firstItem="zII-W8-vZV" firstAttribute="leading" secondItem="Q87-i5-xUy" secondAttribute="leading" constant="20" id="Cyc-UL-gJL"/>
                             <constraint firstItem="ugU-aY-nn4" firstAttribute="top" secondItem="zII-W8-vZV" secondAttribute="bottom" constant="14" id="IxE-A0-0oh"/>
                             <constraint firstAttribute="trailing" secondItem="ugU-aY-nn4" secondAttribute="trailing" constant="209.5" id="OAW-HU-zby"/>
                             <constraint firstAttribute="bottom" secondItem="ugU-aY-nn4" secondAttribute="bottom" constant="14" id="a04-lY-tL5"/>
+                            <constraint firstItem="OU1-ln-2kd" firstAttribute="top" secondItem="zII-W8-vZV" secondAttribute="top" id="bJF-4e-XFc"/>
                             <constraint firstItem="ugU-aY-nn4" firstAttribute="leading" secondItem="SZp-f7-XwQ" secondAttribute="leading" constant="10" id="fsI-Ma-eT0"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="zII-W8-vZV" secondAttribute="trailing" constant="20" symbolic="YES" id="htY-wo-H4k"/>
                             <constraint firstItem="ugU-aY-nn4" firstAttribute="top" secondItem="Q87-i5-xUy" secondAttribute="top" constant="45" id="mu4-xz-naU"/>
+                            <constraint firstItem="OU1-ln-2kd" firstAttribute="trailing" secondItem="Q87-i5-xUy" secondAttribute="trailingMargin" id="vLd-YP-NTP"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="s6G-Uq-Wnn"/>
@@ -319,10 +320,6 @@
             <point key="canvasLocation" x="-1096" y="600"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="V2m-cZ-Xqt"/>
-        <segue reference="qBH-Vi-AGb"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
