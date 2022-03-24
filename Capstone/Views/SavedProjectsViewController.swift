@@ -81,9 +81,9 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
             //print(item)
             let _item  = item.suffix(3)
             if _item == "png" {
-                fileArray.append(item)
+                print("Found a png")
             } else {
-                print("Not a png")
+                fileArray.append(item)
             }
         }
         
@@ -128,9 +128,7 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
         label.textAlignment = NSTextAlignment.center
         label.textColor = .yellow
         label.backgroundColor = .gray
-        
-        
-            
+
         headerView.addSubview(label)
             
         return headerView
@@ -147,8 +145,14 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
         let row = indexPath.row
         self.tryfile = fileArray[row]
         print("User selected: \(fileArray[row])")
+    
+        /* FIXME: Highlights what gets clicked*/
+        let selectedCell:UITableViewCell = tableView.cellForRow(at: indexPath)!
+        selectedCell.isSelected = true
+        //selectedCell.contentView.backgroundColor = UIColor.white
         
     }
+    
     
     @IBAction func editBTN(_ sender: Any) {
         self.performSegue(withIdentifier: "LoadedView", sender: self)

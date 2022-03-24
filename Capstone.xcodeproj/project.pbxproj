@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6C10811727DC4DE1007CB7B7 /* LoadedProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C10811627DC4DE1007CB7B7 /* LoadedProjectViewController.swift */; };
+		6C35AA8227E2B5CC00DF72AE /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C35AA8127E2B5CC00DF72AE /* CanvasView.swift */; };
 		6CAB8F7627BB4C830008C799 /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CAB8F7527BB4C830008C799 /* CircleView.swift */; };
 		6CBE42AF27BF699400B822AE /* ImagePickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBE42AE27BF699400B822AE /* ImagePickerManager.swift */; };
 		6CF18BE627A2446300257E1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CF18BE527A2446300257E1A /* AppDelegate.swift */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		6C10811627DC4DE1007CB7B7 /* LoadedProjectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadedProjectViewController.swift; sourceTree = "<group>"; };
+		6C35AA8127E2B5CC00DF72AE /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		6CAB8F7527BB4C830008C799 /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
 		6CBE42AE27BF699400B822AE /* ImagePickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerManager.swift; sourceTree = "<group>"; };
 		6CF18BE227A2446200257E1A /* Capstone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Capstone.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,6 +49,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6C51F18427E96038000783B9 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
 		6CDB632B27B1A08300B08022 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -54,6 +63,7 @@
 				6C10811627DC4DE1007CB7B7 /* LoadedProjectViewController.swift */,
 				6CF18BFB27A24B5A00257E1A /* SavedProjectsViewController.swift */,
 				6CAB8F7527BB4C830008C799 /* CircleView.swift */,
+				6C35AA8127E2B5CC00DF72AE /* CanvasView.swift */,
 				6CBE42AE27BF699400B822AE /* ImagePickerManager.swift */,
 			);
 			path = Views;
@@ -81,6 +91,7 @@
 				6CF18BE527A2446300257E1A /* AppDelegate.swift */,
 				6CF18BE727A2446300257E1A /* SceneDelegate.swift */,
 				6CF18BE927A2446300257E1A /* ViewController.swift */,
+				6C51F18427E96038000783B9 /* Helper */,
 				6CDB632B27B1A08300B08022 /* Views */,
 				6CF18BEB27A2446300257E1A /* Main.storyboard */,
 				6CF18BEE27A2446700257E1A /* Assets.xcassets */,
@@ -169,6 +180,7 @@
 				6CF18BFA27A24B0E00257E1A /* NewProjectViewController.swift in Sources */,
 				6CF18BE627A2446300257E1A /* AppDelegate.swift in Sources */,
 				6CF18BE827A2446300257E1A /* SceneDelegate.swift in Sources */,
+				6C35AA8227E2B5CC00DF72AE /* CanvasView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

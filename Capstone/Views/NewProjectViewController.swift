@@ -16,11 +16,34 @@ class LocalFileManager {
     /* FIXME: Change func name to saveProject */
     func saveImage(_ image: UIImage, _ imageName: String,_ annotations: Dictionary<String, Array<Dictionary<String, CGFloat>>> ) {
 
+        let fManager = FileManager.default
+        guard let url = fManager.urls(
+            for: .documentDirectory,
+            in: .userDomainMask
+        ).first else {
+            return
+        }
+        
+        let newFolderUrl = url
+            .appendingPathComponent("\(imageName)")
+        do {
+            try fManager.createDirectory(
+                at: newFolderUrl,
+                withIntermediateDirectories: true,
+                attributes: [:]
+            )
+        }
+        catch {
+            print(error)
+        }
+        
         let bluePrint = image.pngData()
-        let path = documentDirectoryPath("\(imageName).png")
+
+        let path = documentDirectoryPath("\(imageName)")
         do {
             try
             bluePrint?.write(to: path!)
+            // write to file
             print("Success")
         } catch let error {
             print("Error saving. \(error)")
@@ -28,7 +51,7 @@ class LocalFileManager {
     }
     func documentDirectoryPath(_ imageName : String) -> URL? {
         let path = FileManager.default.urls(for: .documentDirectory,
-                                               in: .userDomainMask).first?.appendingPathComponent("\(imageName)")
+                                               in: .userDomainMask).first?.appendingPathComponent("/\(imageName)/\(imageName).png")
         return path
     }
         
@@ -74,10 +97,19 @@ class LocalFileManager {
 
 class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
+    @IBOutlet weak var canvasView: CanvasView!
     @IBOutlet var imageView: UIImageView!
     @IBOutlet weak var projectSave: UIButton!
     @IBOutlet weak var projectName: UITextField!
     @IBOutlet weak var projectNameHeader: UILabel!
+    @IBOutlet weak var Blue: UIButton!
+    @IBOutlet weak var Green: UIButton!
+    @IBOutlet weak var Red: UIButton!
+    @IBOutlet weak var Yellow: UIButton!
+    @IBOutlet weak var UploadImage: UIButton!
+    @IBOutlet weak var OpenCamera: UIButton!
+    @IBOutlet weak var UploadingImageStack: UIStackView!
+    @IBOutlet weak var Canvas: CanvasView!
     
     //public var image: UIImage = UIImage()
     //var image:UIImage? = nil
@@ -94,6 +126,8 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     public var annotes : Dictionary<String, Array<Dictionary<String, CGFloat>>> = ["accesspoint": [[:]]]
     public var myArray = [Dictionary<String, CGFloat>]()
     
+    var colorPoint: String = "Blue"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeHideKeyboard()
@@ -108,12 +142,11 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
 
     // Specify the orientation.
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .landscapeLeft
+        return .landscapeRight
     }
     
     /* Uploads the photogallery and allows user select image and zoom in/out*/
-    @IBAction func onClickPickImage() {
-        
+    @IBAction func onClickUploadImage(_ sender: Any) {
         _projectName = projectName.text!
         
         if (_projectName != "") {
@@ -126,6 +159,9 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
             present(vc, animated: true)
             saved = false
             uploaded = true
+            UploadingImageStack.isHidden = true
+            Canvas.isHidden = true
+            //(sender as! UIButton).isHidden = true
         }
         else {
             print("Name the project first before uploading an image")
@@ -143,11 +179,51 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                 present(vc, animated: true, completion: nil)
                 saved = false
                 uploaded = true
+                UploadingImageStack.isHidden = true
+                Canvas.isHidden = true
+                //(sender as! UIButton).isHidden = true
             }
             else{
                 print("Name the project first before uploading an image")
             }
         }
+    }
+    
+    @IBAction func blue(_ sender: Any) {
+        //print("Clicked blue")
+        (sender as AnyObject).setImage( UIImage(systemName: "circle.inset.filled"), for: [])
+        Green.setImage(UIImage(systemName: "circle.fill"), for: [])
+        Red.setImage(UIImage(systemName: "circle.fill"), for: [])
+        Yellow.setImage(UIImage(systemName: "circle.fill"), for: [])
+        colorPoint = "Blue"
+        
+    }
+    
+    @IBAction func green(_ sender: Any) {
+        //print("Clicked green")
+        (sender as AnyObject).setImage( UIImage(systemName: "circle.inset.filled"), for: [])
+        Blue.setImage(UIImage(systemName: "circle.fill"), for: [])
+        Red.setImage(UIImage(systemName: "circle.fill"), for: [])
+        Yellow.setImage(UIImage(systemName: "circle.fill"), for: [])
+        colorPoint = "Green"
+    }
+    
+    @IBAction func red(_ sender: Any) {
+        //print("Clicked red")
+        (sender as AnyObject).setImage( UIImage(systemName: "circle.inset.filled"), for: [])
+        Blue.setImage(UIImage(systemName: "circle.fill"), for: [])
+        Green.setImage(UIImage(systemName: "circle.fill"), for: [])
+        Yellow.setImage(UIImage(systemName: "circle.fill"), for: [])
+        colorPoint = "Red"
+    }
+    
+    @IBAction func yellow(_ sender: Any) {
+        //print("Clicked yellow")
+        (sender as AnyObject).setImage( UIImage(systemName: "circle.inset.filled"), for: [])
+        Blue.setImage(UIImage(systemName: "circle.fill"), for: [])
+        Green.setImage(UIImage(systemName: "circle.fill"), for: [])
+        Red.setImage(UIImage(systemName: "circle.fill"), for: [])
+        colorPoint = "Yellow"
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
@@ -156,7 +232,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
         _projectName = _projectName.trimmingCharacters(in: .whitespaces)
         
         if (_projectName != "" && saved == false){
-            //print("\(image) , \(_projectName) , \(annotes)")
+            print("Annotes: \(annotes)")
             manager.saveImage(globalImage!, "\(_projectName)", annotes)
             print(_projectName)
             saved = true
@@ -223,6 +299,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
         for touch in touches {
             if uploaded != false {
             // Set the Center of the Circle
@@ -246,7 +323,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
             }
         }
         saved = false
-        print("touch")
+        print("{touch}")
     }
 }
 

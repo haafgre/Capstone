@@ -26,7 +26,7 @@ class CircleView: UIView {
             context.setLineWidth(8.0);
             
             // Set the circle outerline-colour
-            UIColor.red.set()
+            UIColor.blue.set()
             
             // Create Circle
             //let center = CGPoint(x: frame.size.width/2, y: frame.size.height/2)

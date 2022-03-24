@@ -45,11 +45,11 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
 
     // Specify the orientation.
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .landscapeLeft
+        return .landscapeRight
     }
     
     private func load(fileName: String) -> UIImage? {
-        let fileURL = documentsUrl.appendingPathComponent(fileName)
+        let fileURL = documentsUrl.appendingPathComponent("\(fileName)/\(fileName).png")
         print("FileURL: \(fileURL)")
         do {
             let imageData = try Data(contentsOf: fileURL)
