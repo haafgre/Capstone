@@ -126,7 +126,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     public var annotes : Dictionary<String, Array<Dictionary<String, CGFloat>>> = ["accesspoint": [[:]]]
     public var myArray = [Dictionary<String, CGFloat>]()
     
-    var colorPoint: String = "Blue"
+    var colorPoint: String = "blue"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -149,7 +149,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     @IBAction func onClickUploadImage(_ sender: Any) {
         _projectName = projectName.text!
         
-        if (_projectName != "") {
+        //if (_projectName != "") {
             let vc = UIImagePickerController()
         
             // Suggested to use PHPicker
@@ -162,16 +162,16 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
             UploadingImageStack.isHidden = true
             Canvas.isHidden = true
             //(sender as! UIButton).isHidden = true
-        }
-        else {
-            print("Name the project first before uploading an image")
-        }
+        //}
+        //else {
+        //    print("Name the project first before uploading an image")
+        //}
     }
     
     @IBAction func onClickCamera(_ sender: Any) {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             _projectName = projectName.text!
-            if (_projectName != "") {
+            //if (_projectName != "") {
                 let vc = UIImagePickerController()
                 vc.delegate = self
                 vc.sourceType = .camera;
@@ -182,48 +182,11 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                 UploadingImageStack.isHidden = true
                 Canvas.isHidden = true
                 //(sender as! UIButton).isHidden = true
-            }
-            else{
-                print("Name the project first before uploading an image")
-            }
+            //}
+            //else{
+            //    print("Name the project first before uploading an image")
+            //}
         }
-    }
-    
-    @IBAction func blue(_ sender: Any) {
-        //print("Clicked blue")
-        (sender as AnyObject).setImage( UIImage(systemName: "circle.inset.filled"), for: [])
-        Green.setImage(UIImage(systemName: "circle.fill"), for: [])
-        Red.setImage(UIImage(systemName: "circle.fill"), for: [])
-        Yellow.setImage(UIImage(systemName: "circle.fill"), for: [])
-        colorPoint = "Blue"
-        
-    }
-    
-    @IBAction func green(_ sender: Any) {
-        //print("Clicked green")
-        (sender as AnyObject).setImage( UIImage(systemName: "circle.inset.filled"), for: [])
-        Blue.setImage(UIImage(systemName: "circle.fill"), for: [])
-        Red.setImage(UIImage(systemName: "circle.fill"), for: [])
-        Yellow.setImage(UIImage(systemName: "circle.fill"), for: [])
-        colorPoint = "Green"
-    }
-    
-    @IBAction func red(_ sender: Any) {
-        //print("Clicked red")
-        (sender as AnyObject).setImage( UIImage(systemName: "circle.inset.filled"), for: [])
-        Blue.setImage(UIImage(systemName: "circle.fill"), for: [])
-        Green.setImage(UIImage(systemName: "circle.fill"), for: [])
-        Yellow.setImage(UIImage(systemName: "circle.fill"), for: [])
-        colorPoint = "Red"
-    }
-    
-    @IBAction func yellow(_ sender: Any) {
-        //print("Clicked yellow")
-        (sender as AnyObject).setImage( UIImage(systemName: "circle.inset.filled"), for: [])
-        Blue.setImage(UIImage(systemName: "circle.fill"), for: [])
-        Green.setImage(UIImage(systemName: "circle.fill"), for: [])
-        Red.setImage(UIImage(systemName: "circle.fill"), for: [])
-        colorPoint = "Yellow"
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
@@ -231,7 +194,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
         //projectNameHeader.text = _projectName
         _projectName = _projectName.trimmingCharacters(in: .whitespaces)
         
-        if (_projectName != "" && saved == false){
+        if (_projectName != "" && saved == false && uploaded == true){
             print("Annotes: \(annotes)")
             manager.saveImage(globalImage!, "\(_projectName)", annotes)
             print(_projectName)
@@ -243,30 +206,46 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
         else if (_projectName == ""){
             print("Name this project!")
         }
-        
-        /* FIXME: Create a folder to store everything in for each project
-        let fileManager = FileManager.default
-        path = (NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString).appendingPathComponent("\(_projectName).Folder")
-        if !fileManager.fileExists(atPath: path as! String){
-            try! fileManager.createDirectory(atPath: path as! String, withIntermediateDirectories: true, attributes: nil)
-        }else{
-            print("Already dictionary created.")
-        }*/
-        
-        
-        /*let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
-        let documentsDirectory = paths[0]
-        let docURL = URL(string: documentsDirectory)!
-        let dataPath = docURL.appendingPathComponent("\(_projectName)")
-        if !FileManager.default.fileExists(atPath: dataPath.path) {
-            do {
-                try FileManager.default.createDirectory(atPath: dataPath.path, withIntermediateDirectories: true, attributes: nil)
-            } catch {
-                print(error.localizedDescription)
-            }
-        }*/
+    }
+    
+    @IBAction func blue(_ sender: Any) {
+        //print("Clicked blue")
+        (sender as AnyObject).setImage( UIImage(systemName: "circle.inset.filled"), for: [])
+        Green.setImage(UIImage(systemName: "circle.fill"), for: [])
+        Red.setImage(UIImage(systemName: "circle.fill"), for: [])
+        Yellow.setImage(UIImage(systemName: "circle.fill"), for: [])
+        colorPoint = "blue"
         
     }
+    
+    @IBAction func green(_ sender: Any) {
+        //print("Clicked green")
+        (sender as AnyObject).setImage( UIImage(systemName: "circle.inset.filled"), for: [])
+        Blue.setImage(UIImage(systemName: "circle.fill"), for: [])
+        Red.setImage(UIImage(systemName: "circle.fill"), for: [])
+        Yellow.setImage(UIImage(systemName: "circle.fill"), for: [])
+        colorPoint = "green"
+    }
+    
+    @IBAction func red(_ sender: Any) {
+        //print("Clicked red")
+        (sender as AnyObject).setImage( UIImage(systemName: "circle.inset.filled"), for: [])
+        Blue.setImage(UIImage(systemName: "circle.fill"), for: [])
+        Green.setImage(UIImage(systemName: "circle.fill"), for: [])
+        Yellow.setImage(UIImage(systemName: "circle.fill"), for: [])
+        colorPoint = "red"
+    }
+    
+    @IBAction func yellow(_ sender: Any) {
+        //print("Clicked yellow")
+        (sender as AnyObject).setImage( UIImage(systemName: "circle.inset.filled"), for: [])
+        Blue.setImage(UIImage(systemName: "circle.fill"), for: [])
+        Green.setImage(UIImage(systemName: "circle.fill"), for: [])
+        Red.setImage(UIImage(systemName: "circle.fill"), for: [])
+        colorPoint = "yellow"
+    }
+    
+
     
     func initializeHideKeyboard(){
         //Declare a Tap Gesture Recognizer which will trigger our dismissMyKeyboard() function
@@ -313,14 +292,21 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
             print("Annotes: ", annotes)
             
             // Set a Circle Radius
-            let circleWidth = CGFloat(25)
+            let circleWidth = CGFloat(15)
             let circleHeight = circleWidth
                 
             // Create a new CircleView
             // 3
-            let circleView = CircleView(frame: CGRect(x: circleCenter.x, y: circleCenter.y, width: circleWidth, height: circleHeight))
+                //var cardSegmentedControl = CardSegmentedControl()
+
+                // here, change its property value
+                //cardSegmentedControl.selectedIndex = 1
+                //CircleView().selectedColor = colorPoint
+                print(colorPoint)
+                let circleView = CircleView(selectedColor: colorPoint,frame: CGRect(x: circleCenter.x, y: circleCenter.y, width: circleWidth, height: circleHeight))
             view.addSubview(circleView)
             }
+            
         }
         saved = false
         print("{touch}")

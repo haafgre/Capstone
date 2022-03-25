@@ -75,13 +75,13 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
             print("Annotes: ", annotes)
             
             // Set a Circle Radius
-            let circleWidth = CGFloat(25)
+            let circleWidth = CGFloat(15)
             let circleHeight = circleWidth
                 
             // Create a new CircleView
             // 3
-            let circleView = CircleView(frame: CGRect(x: circleCenter.x, y: circleCenter.y, width: circleWidth, height: circleHeight))
-            view.addSubview(circleView)
+            //    let circleView = CircleView(selectedColor: ,frame: CGRect(x: circleCenter.x, y: circleCenter.y, width: circleWidth, height: circleHeight))
+            //view.addSubview(circleView)
             }
         }
         saved = false

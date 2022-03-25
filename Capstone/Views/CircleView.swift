@@ -4,21 +4,63 @@
 //
 //  Created by BVU Student on 2/14/22.
 //
-
+//import other file, get a variable from file, set variable to that
 import UIKit
 
 class CircleView: UIView {
 
+    var selectedColor: String = "blue"
+    //var i: Int?
+    init(selectedColor: String, frame: CGRect) {
+        print("Debug: \(selectedColor)")
+        self.selectedColor = selectedColor
+        
+        //self.i = i
+        super.init(frame: frame)
+        drawOval()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+/*    public var selectedColor: String = "yellow"
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.clear
+        drawOval()
     }
         
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }*/
+    
+    
+    private func drawOval() {
+        let path = UIBezierPath(ovalIn: self.bounds)
+            
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        
+        if (selectedColor == "blue") {
+            shapeLayer.fillColor = UIColor.blue.cgColor
+        }
+        else if (selectedColor == "green") {
+            shapeLayer.fillColor = UIColor.green.cgColor
+        }
+        else if (selectedColor == "red") {
+            shapeLayer.fillColor = UIColor.red.cgColor
+        }
+        else if (selectedColor == "yellow") {
+            shapeLayer.fillColor = UIColor.yellow.cgColor
+        }
+        shapeLayer.lineWidth = 3
+        shapeLayer.strokeColor = UIColor.black.cgColor
+            
+        self.layer.addSublayer(shapeLayer)
     }
     
-    override func draw(_ rect: CGRect) {
+    /*override func draw(_ rect: CGRect) {
         // Get the Graphics Context
         if let context = UIGraphicsGetCurrentContext() {
             
@@ -37,6 +79,6 @@ class CircleView: UIView {
             // Draw
             context.strokePath()
         }
-    }
+    }*/
 
 }
