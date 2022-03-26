@@ -8,6 +8,7 @@
 import Photos
 import PhotosUI
 import UIKit
+import SQLite3
 
 class LocalFileManager {
     
@@ -62,37 +63,7 @@ class LocalFileManager {
             try annotations.writeToURL(fileName!)
         } catch {
             print("Error saving, \(error)")
-        }
-        
-        /* FIXME: Writing to document directory of png image */
-        let blueprintImage = image.pngData()
-        let dictionary = annotations
-        //print("Debug: \(imageName)")
-        let path = getPathFor(imageName: "\(imageName).png")
-        
-        do {
-            try
-            blueprintImage?.write(to: path!)
-            try! dictionary.writeToURL(path!)
-            print("dictionary: \(dictionary)")
-            print("Success")
-        } catch let error {
-            print("Error saving. \(error)")
-            
-        }
-    }
-    func getPathFor(imageName: String) -> URL? {
-        guard
-            let path = FileManager
-                .default
-                .urls(for: .documentDirectory, in: .userDomainMask)
-                .first?
-                .appendingPathComponent("\(imageName)") else {
-                    print("Error getting path")
-                    return nil
-                }
-        return path
-    }*/
+        }*/
 }
 
 class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
@@ -116,7 +87,8 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     var globalImage:UIImage? = nil
     
     let manager = LocalFileManager.instance
-     
+    
+    
     //let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
     var path: Any!
     
@@ -199,12 +171,28 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
             manager.saveImage(globalImage!, "\(_projectName)", annotes)
             print(_projectName)
             saved = true
+            let alert = UIAlertController(title: "Saving", message: "Project saved", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
         }
         else if (_projectName != "" && saved == true){
-            print("Project is already saved!")
+            let alert = UIAlertController(title: "Saving", message: "Project is already saved!", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
         }
         else if (_projectName == ""){
-            print("Name this project!")
+            let alert = UIAlertController(title: "Saving", message: "Name this project before saving!", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+        }
+        else if (_projectName != "" && uploaded == false){
+            let alert = UIAlertController(title: "Saving", message: "Upload blueprint before saving!", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
         }
     }
     

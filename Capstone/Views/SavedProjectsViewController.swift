@@ -161,12 +161,21 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
     @IBAction func deleteBTN(_ sender: Any) {
         let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let fileURL = URL(fileURLWithPath: tryfile, relativeTo: directoryURL)
-        do {
-            try FileManager.default.removeItem(at: fileURL)
-            print("Delete \(tryfile)")
-        } catch {
-            // Catch any errors
-            print(error.localizedDescription)
+        print("&&&&&&&&&&&&&&&&: \(fileURL)")
+        if (tryfile != ""){
+            do {
+            
+                try FileManager.default.removeItem(at: fileURL)
+                print("Delete \(tryfile)")
+            } catch {
+                // Catch any errors
+                print(error.localizedDescription)
+            }
+        } else {
+            let alert = UIAlertController(title: "Deleting", message: "No project selected yet", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
         }
         
     }
