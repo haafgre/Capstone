@@ -34,9 +34,9 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ul8-JM-bVy">
-                                <rect key="frame" x="68" y="44" width="278.5" height="533"/>
+                                <rect key="frame" x="71" y="44" width="272" height="533"/>
                                 <attributedString key="attributedText">
-                                    <fragment content="Blueprint Compainion">
+                                    <fragment content="Blueprint Companion">
                                         <attributes>
                                             <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <font key="NSFont" metaFont="system" size="30"/>
@@ -314,6 +314,9 @@
                         <outlet property="UploadingImageStack" destination="AbO-a5-xOh" id="0ld-Fx-wV8"/>
                         <outlet property="Yellow" destination="nQU-L7-q5P" id="aSs-oH-BTS"/>
                         <outlet property="canvasView" destination="GzM-L7-TDJ" id="pAH-EC-byW"/>
+                        <outlet property="iconLocation" destination="6eU-ha-zvd" id="s60-bo-Rrz"/>
+                        <outlet property="iconName" destination="4zL-19-wY7" id="S5J-8P-VJr"/>
+                        <outlet property="iconType" destination="lcr-iD-sgP" id="VEj-iS-fal"/>
                         <outlet property="imageView" destination="ZHh-hb-O22" id="for-qh-jZF"/>
                         <outlet property="projectName" destination="NdS-LT-WVQ" id="xWZ-Lr-hHI"/>
                         <outlet property="projectSave" destination="t7z-xQ-I5w" id="BLB-g5-baz"/>

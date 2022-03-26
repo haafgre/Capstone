@@ -82,6 +82,10 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     @IBOutlet weak var UploadingImageStack: UIStackView!
     @IBOutlet weak var Canvas: CanvasView!
     
+    @IBOutlet weak var iconName: UITextField!
+    @IBOutlet weak var iconType: UITextField!
+    @IBOutlet weak var iconLocation: UITextField!
+    
     //public var image: UIImage = UIImage()
     //var image:UIImage? = nil
     var globalImage:UIImage? = nil
@@ -94,6 +98,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     var saved = false
     var uploaded = false
+    var keyboard = false
     public var _projectName: String = ""
     public var annotes : Dictionary<String, Array<Dictionary<String, CGFloat>>> = ["accesspoint": [[:]]]
     public var myArray = [Dictionary<String, CGFloat>]()
@@ -237,7 +242,9 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     func initializeHideKeyboard(){
         //Declare a Tap Gesture Recognizer which will trigger our dismissMyKeyboard() function
+        keyboard = true
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,action: #selector(dismissMyKeyboard))
+        
         //Add this tap gesture recognizer to the parent view
         view.addGestureRecognizer(tap)
     }
@@ -266,35 +273,48 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        dismissMyKeyboard()
         for touch in touches {
             if uploaded != false {
-            // Set the Center of the Circle
-            let circleCenter = touch.location(in: view)
-            let dict = ["x": circleCenter.x, "y": circleCenter.y]
+                // Set the Center of the Circle
+                let circleCenter = touch.location(in: view)
+                let dict = ["x": circleCenter.x, "y": circleCenter.y]
             
-            myArray.append(dict)
+                myArray.append(dict)
             
-            annotes = ["accesspoint": myArray]
+                annotes = ["accesspoint": myArray]
             
-            print("Annotes: ", annotes)
+                print("Annotes: ", annotes)
             
-            // Set a Circle Radius
-            let circleWidth = CGFloat(15)
-            let circleHeight = circleWidth
+                // Set a Circle Radius
+                let circleWidth = CGFloat(15)
+                let circleHeight = circleWidth
                 
-            // Create a new CircleView
-            // 3
+                // Create a new CircleView
+                // 3
                 //var cardSegmentedControl = CardSegmentedControl()
 
                 // here, change its property value
                 //cardSegmentedControl.selectedIndex = 1
                 //CircleView().selectedColor = colorPoint
                 print(colorPoint)
-                let circleView = CircleView(selectedColor: colorPoint,frame: CGRect(x: circleCenter.x, y: circleCenter.y, width: circleWidth, height: circleHeight))
-            view.addSubview(circleView)
+                if (iconName.text != "" && iconType.text != "" && iconLocation.text != "") {
+                    let circleView = CircleView(selectedColor: colorPoint,frame: CGRect(x: circleCenter.x, y: circleCenter.y, width: circleWidth, height: circleHeight))
+                    view.addSubview(circleView)
+                }
+                else if (iconName.text == "" || iconType.text == "" || iconLocation.text == "") {
+                    if(keyboard == true) {
+                        dismissMyKeyboard()
+                        keyboard = false
+                    }
+                    else {
+                        let alert = UIAlertController(title: "Alert", message: "Please fill in all field entries before placing icons!", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
+                        alert.addAction(action)
+                        present(alert, animated: true, completion: nil)
+                    }
+                }
             }
-            
         }
         saved = false
         print("{touch}")
