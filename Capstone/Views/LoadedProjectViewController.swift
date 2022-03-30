@@ -16,6 +16,7 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
     
     var saved = false
     var uploaded = true
+    
     public var _projectName: String = ""
     public var annotes : Dictionary<String, Array<Dictionary<String, CGFloat>>> = ["accesspoint": [[:]]]
     public var myArray = [Dictionary<String, CGFloat>]()
@@ -34,7 +35,7 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
         loadedView.image = loadedImage
         //loadedView.image = UIImage(named: "test")
         // Do any additional setup after loading the view.
-        print("Select: \(String(describing: selectedImage))")
+        //print("Select: \(String(describing: selectedImage))")
         
     }
     
@@ -50,10 +51,10 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
     
     private func load(fileName: String) -> UIImage? {
         let fileURL = documentsUrl.appendingPathComponent("\(fileName)/\(fileName).png")
-        print("FileURL: \(fileURL)")
+        //print("FileURL: \(fileURL)")
         do {
             let imageData = try Data(contentsOf: fileURL)
-            print("Made it?")
+            //print("Made it?")
             return UIImage(data: imageData)
         } catch {
             print("Error loading image : \(error)")

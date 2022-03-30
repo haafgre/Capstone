@@ -37,7 +37,7 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
                 includingPropertiesForKeys: nil
             )
             //print("directoryContents:", directoryContents.map { $0.localizedName ?? $0.lastPathComponent })
-            for url in directoryContents {
+            /*for url in directoryContents {
                 print(url.localizedName ?? url.lastPathComponent)
                 //try FileManager.default.removeItem(at: url)
             }
@@ -48,11 +48,11 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
             }
             for url in directoryContents {
                 //print(url.localizedName ?? url.lastPathComponent)
-            }
+            }*/
 
             // if you want to get all png files located at the documents directory:
             let pngs = directoryContents.filter(\.isPNG).map { $0.localizedName ?? $0.lastPathComponent }
-            print("pngs:", pngs)
+            //print("pngs:", pngs)
             
         } catch {
             print(error)
@@ -144,7 +144,7 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
 
         let row = indexPath.row
         self.tryfile = fileArray[row]
-        print("User selected: \(fileArray[row])")
+        //print("User selected: \(fileArray[row])")
     
         /* FIXME: Highlights what gets clicked*/
         let selectedCell:UITableViewCell = tableView.cellForRow(at: indexPath)!
@@ -161,12 +161,12 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
     @IBAction func deleteBTN(_ sender: Any) {
         let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let fileURL = URL(fileURLWithPath: tryfile, relativeTo: directoryURL)
-        print("&&&&&&&&&&&&&&&&: \(fileURL)")
+        
         if (tryfile != ""){
             do {
             
                 try FileManager.default.removeItem(at: fileURL)
-                print("Delete \(tryfile)")
+                //print("Delete \(tryfile)")
             } catch {
                 // Catch any errors
                 print(error.localizedDescription)

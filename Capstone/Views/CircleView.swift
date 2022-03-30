@@ -60,6 +60,17 @@ class CircleView: UIView {
         self.layer.addSublayer(shapeLayer)
     }
     
+    @objc func labelTapped(_ sender: UITapGestureRecognizer) {
+            print("labelTapped")
+        }
+    
+    func setupLabelTap() {
+        
+        let labelTap = UITapGestureRecognizer(target: self, action: #selector(self.labelTapped(_:)))
+        self.isUserInteractionEnabled = true
+        self.addGestureRecognizer(labelTap)
+        
+    }
     /*override func draw(_ rect: CGRect) {
         // Get the Graphics Context
         if let context = UIGraphicsGetCurrentContext() {

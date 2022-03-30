@@ -8,7 +8,7 @@
 import Photos
 import PhotosUI
 import UIKit
-import SQLite3
+import SQLite
 
 class LocalFileManager {
     
@@ -96,6 +96,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     //let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
     var path: Any!
     
+    var setIcon = true
     var saved = false
     var uploaded = false
     var keyboard = false
@@ -104,11 +105,29 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     public var myArray = [Dictionary<String, CGFloat>]()
     
     var colorPoint: String = "blue"
+    var database: Connection!
+    let iconsTable = Table("icons")
+    let id = Expression<Int>("id")
+    let name = Expression<String>("name")
+    let type = Expression<String>("type")
+    let location = Expression<String>("location")
+    let color = Expression<String>("color")
+    var iconArray = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeHideKeyboard()
-        //projectName.delegate = self
+        
+        do{
+            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let fileUrl = documentDirectory.appendingPathComponent("icons").appendingPathExtension("sqlite3")
+            let database = try Connection(fileUrl.path)
+            self.database = database
+        } catch {
+            print(error)
+        }
+        
+        createTable()
         
     }
     
@@ -120,6 +139,19 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     // Specify the orientation.
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .landscapeRight
+    }
+    
+    func setProjectName() {
+
+        let alert = UIAlertController(title: "Name Blueprint Project", message: nil, preferredStyle: .alert)
+        alert.addTextField { tf in
+            tf.placeholder = "Name" }
+        let action = UIAlertAction(title: "Submit", style: .default) { (_) in
+            self._projectName = (alert.textFields?.first?.text)!
+        }
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+        print("???????????????????????????????????")
     }
     
     /* Uploads the photogallery and allows user select image and zoom in/out*/
@@ -136,8 +168,8 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
             present(vc, animated: true)
             saved = false
             uploaded = true
-            UploadingImageStack.isHidden = true
-            Canvas.isHidden = true
+            //UploadingImageStack.isHidden = true
+            //Canvas.isHidden = true
             //(sender as! UIButton).isHidden = true
         //}
         //else {
@@ -156,8 +188,8 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                 present(vc, animated: true, completion: nil)
                 saved = false
                 uploaded = true
-                UploadingImageStack.isHidden = true
-                Canvas.isHidden = true
+                //UploadingImageStack.isHidden = true
+                //Canvas.isHidden = true
                 //(sender as! UIButton).isHidden = true
             //}
             //else{
@@ -167,6 +199,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
+        listIcons()
         _projectName = projectName.text!
         //projectNameHeader.text = _projectName
         _projectName = _projectName.trimmingCharacters(in: .whitespaces)
@@ -176,6 +209,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
             manager.saveImage(globalImage!, "\(_projectName)", annotes)
             print(_projectName)
             saved = true
+            
             let alert = UIAlertController(title: "Saving", message: "Project saved", preferredStyle: .alert)
             let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
             alert.addAction(action)
@@ -264,7 +298,9 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
             globalImage = image
         }
         //manager.saveImage(image!, "\(_projectName)", annotes)
-        
+        if (imageView.image != nil) {
+            Canvas.isHidden = true
+        }
         picker.dismiss(animated: true, completion: nil)
     }
     
@@ -297,10 +333,18 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                 // here, change its property value
                 //cardSegmentedControl.selectedIndex = 1
                 //CircleView().selectedColor = colorPoint
-                print(colorPoint)
+                
                 if (iconName.text != "" && iconType.text != "" && iconLocation.text != "") {
-                    let circleView = CircleView(selectedColor: colorPoint,frame: CGRect(x: circleCenter.x, y: circleCenter.y, width: circleWidth, height: circleHeight))
-                    view.addSubview(circleView)
+                    do {
+                        let success = insertIcon()
+                        if (success == true && setIcon == true) {
+                            let circleView = CircleView(selectedColor: colorPoint,frame: CGRect(x: circleCenter.x, y: circleCenter.y, width: circleWidth, height: circleHeight))
+                            view.addSubview(circleView)
+                            setIcon = false
+                        }
+                    } catch {
+                        print(error)
+                    }
                 }
                 else if (iconName.text == "" || iconType.text == "" || iconLocation.text == "") {
                     if(keyboard == true) {
@@ -318,6 +362,95 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
         }
         saved = false
         print("{touch}")
+    }
+    
+    func createTable() {
+//        print("CREATED TABLE")
+        
+        let createTable = self.iconsTable.create { table in
+            table.column(self.id, primaryKey: true)
+            table.column(self.name, unique: true)
+            table.column(self.type)
+            table.column(self.location)
+            table.column(self.color)
+        }
+        do {
+            try self.database.run(createTable)
+            print("TABLE GOT CREATED")
+        } catch {
+            print(error)
+        }
+    }
+    
+    func insertIcon() -> Bool {
+        print("Inserting")
+        guard let name = iconName.text,
+              let type = iconType.text,
+              let location = iconLocation.text
+              //let color
+        else {return false}
+        let insertIcon = self.iconsTable.insert(self.name <- name, self.type <- type, self.location <- location, self.color <- colorPoint)
+        
+        do {
+            try self.database.run(insertIcon)
+            print("INSERTED ICON DATA")
+            setIcon = true
+            return true
+        } catch {
+            print(error)
+            let alert = UIAlertController(title: "Alert", message: "You already used that name for that type, try using a different name or 'Update Icon' if you made changes.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+            return false
+        }
+    }
+    
+    func listIcons() {
+        print("Listing")
+        
+        do {
+            let icons = try self.database.prepare(self.iconsTable)
+            for icon in icons {
+                print("iconID: \(icon[self.id]), name: \(icon[self.name]), type: \(icon[self.type]), location: \(icon[self.location]), color: \(icon[self.color])")
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    @IBAction func updateIcon(_ sender: Any) {
+        print("Updating")
+        guard let name = iconName.text,
+              let type = iconType.text,
+              let location = iconLocation.text
+              //let color
+        else {return}
+        let icon = self.iconsTable.filter(self.name == name)
+        let updateIcon = icon.update(self.name <- name, self.type <- type, self.location <- location, self.color <- colorPoint)
+        
+        do {
+            try self.database.run(updateIcon)
+            print("UPDATED ICON DATA")
+        } catch {
+            print(error)
+        }
+    }
+    
+    @IBAction func deleteIcon(_ sender: Any) {
+        print("Deleting")
+        guard let name = iconName.text
+            else {return}
+        let icon = self.iconsTable.filter(self.name == name)
+        let deleteIcon = icon.delete()
+        
+        do {
+            try self.database.run(deleteIcon)
+            print("DELETED ICON DATA")
+        } catch {
+            print(error)
+        }
+        
     }
 }
 
