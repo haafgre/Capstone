@@ -104,6 +104,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     public var annotes : Dictionary<String, Array<Dictionary<String, CGFloat>>> = ["accesspoint": [[:]]]
     public var myArray = [Dictionary<String, CGFloat>]()
     
+    
     var colorPoint: String = "blue"
     var database: Connection!
     let iconsTable = Table("icons")
@@ -147,7 +148,6 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
         } catch {
             print(error)
         }
-        
         createTable()
         
     }
@@ -326,7 +326,25 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                     let success = insertIcon()
                     if (success == true && setIcon == true) {
                         let circleView = CircleView(selectedColor: colorPoint,frame: CGRect(x: circleCenter.x-7.5, y: circleCenter.y-7.5, width: circleWidth, height: circleHeight))
+                        var label = UILabel(frame: CGRect(x: circleCenter.x, y: circleCenter.y, width: 250, height: 25))
+                        label.center = CGPoint(x: circleCenter.x, y: circleCenter.y+15)
+                        label.textAlignment = .center
+                        if (colorPoint == "blue"){
+                            label.textColor = UIColor.blue
+                        }
+                        else if (colorPoint == "green"){
+                            label.textColor = UIColor.green
+                        }
+                        else if (colorPoint == "yellow"){
+                            label.textColor = UIColor.systemYellow
+                        }
+                        else if (colorPoint == "red"){
+                            label.textColor = UIColor.red
+                        }
+                
+                        label.text = iconName.text
                         view.addSubview(circleView)
+                        view.addSubview(label)
                         setIcon = false
                     }
                 }

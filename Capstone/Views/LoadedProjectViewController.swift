@@ -31,8 +31,9 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
     var saved = false
     var uploaded = true
     var setIcon = true
+    var keyboard = false
     
-    public var _projectName: String = ""
+    //public var _projectName: String = ""
     var colorPoint: String = "blue"
     public var annotes : Dictionary<String, Array<Dictionary<String, CGFloat>>> = ["accesspoint": [[:]]]
     public var myArray = [Dictionary<String, CGFloat>]()
@@ -54,10 +55,43 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        /* FIXME: Nothing Loads correctly :') */
+        initializeHideKeyboard()
+        
         let loadedImage = load(fileName: selectedImage)
         loadedView.contentMode = .scaleAspectFit
         loadedView.image = loadedImage
+        
+        do{
+            let fManager = FileManager.default
+            guard let url = fManager.urls(
+                for: .documentDirectory,
+                in: .userDomainMask
+            ).first else {
+                return
+            }
+            let newFolderUrl = url
+                .appendingPathComponent("\(selectedImage)")
+            do {
+                try fManager.createDirectory(
+                    at: newFolderUrl,
+                    withIntermediateDirectories: true,
+                    attributes: [:]
+                )
+            }
+            catch {
+                print(error)
+            }
+            
+            let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let fileUrl = documentDirectory.appendingPathComponent("\(selectedImage)/\(selectedImage)-icons").appendingPathExtension("sqlite3")
+            print(fileUrl)
+            let database = try Connection(fileUrl.path)
+            self.database = database
+        } catch {
+            print(error)
+        }
+        
+        //createTable()
         //loadedView.image = UIImage(named: "test")
         // Do any additional setup after loading the view.
         //print("Select: \(String(describing: selectedImage))")
@@ -72,6 +106,20 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
     // Specify the orientation.
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .landscapeRight
+    }
+    
+    func initializeHideKeyboard(){
+        //Declare a Tap Gesture Recognizer which will trigger our dismissMyKeyboard() function
+        keyboard = true
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,action: #selector(dismissMyKeyboard))
+        
+        //Add this tap gesture recognizer to the parent view
+        view.addGestureRecognizer(tap)
+    }
+    @objc func dismissMyKeyboard(){
+        //endEditing causes the view (or one of its embedded text fields) to resign the first responder status.
+        //In short- Dismiss the active keyboard.
+        view.endEditing(true)
     }
     
     private func load(fileName: String) -> UIImage? {
@@ -90,10 +138,10 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         listIcons()
         
-        if (_projectName != "" && saved == false && uploaded == true){
+        if (selectedImage != "" && saved == false && uploaded == true){
             print("Annotes: \(annotes)")
-            manager.saveImage(globalImage!, "\(_projectName)", annotes)
-            print(_projectName)
+            manager.saveImage(globalImage!, "\(selectedImage)", annotes)
+            print(selectedImage)
             saved = true
             
             let alert = UIAlertController(title: "Saving", message: "Project saved", preferredStyle: .alert)
@@ -101,19 +149,19 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
         }
-        else if (_projectName != "" && saved == true){
+        else if (selectedImage != "" && saved == true){
             let alert = UIAlertController(title: "Saving", message: "Project is already saved!", preferredStyle: .alert)
             let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
         }
-        else if (_projectName == ""){
+        else if (selectedImage == ""){
             let alert = UIAlertController(title: "Saving", message: "Name this project before saving!", preferredStyle: .alert)
             let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
         }
-        else if (_projectName != "" && uploaded == false){
+        else if (selectedImage != "" && uploaded == false){
             let alert = UIAlertController(title: "Saving", message: "Upload blueprint before saving!", preferredStyle: .alert)
             let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
             alert.addAction(action)
@@ -159,30 +207,78 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        dismissMyKeyboard()
         for touch in touches {
             if uploaded != false {
-            // Set the Center of the Circle
-            let circleCenter = touch.location(in: view)
-            let dict = ["x": circleCenter.x, "y": circleCenter.y]
+                // Set the Center of the Circle
+                let circleCenter = touch.location(in: view)
+                let dict = ["x": circleCenter.x, "y": circleCenter.y]
             
-            myArray.append(dict)
+                myArray.append(dict)
             
-            annotes = ["accesspoint": myArray]
+                annotes = ["accesspoint": myArray]
             
-            print("Annotes: ", annotes)
+                print("Annotes: ", annotes)
             
-            // Set a Circle Radius
-            //let circleWidth = CGFloat(15)
-            //let circleHeight = circleWidth
+                // Set a Circle Radius
+                let circleWidth = CGFloat(15)
+                let circleHeight = circleWidth
                 
-            // Create a new CircleView
-            // 3
-            //    let circleView = CircleView(selectedColor: ,frame: CGRect(x: circleCenter.x, y: circleCenter.y, width: circleWidth, height: circleHeight))
-            //view.addSubview(circleView)
+                // Create a new CircleView
+                // 3
+                //var cardSegmentedControl = CardSegmentedControl()
+
+                // here, change its property value
+                //cardSegmentedControl.selectedIndex = 1
+                //CircleView().selectedColor = colorPoint
+                
+                if (iconName.text != "" && iconType.text != "" && iconLocation.text != "") {
+                    let success = insertIcon()
+                    if (success == true && setIcon == true) {
+                        let circleView = CircleView(selectedColor: colorPoint,frame: CGRect(x: circleCenter.x-7.5, y: circleCenter.y-7.5, width: circleWidth, height: circleHeight))
+                        view.addSubview(circleView)
+                        setIcon = false
+                    }
+                }
+                else if (iconName.text == "" || iconType.text == "" || iconLocation.text == "") {
+                    if(keyboard == true) {
+                        dismissMyKeyboard()
+                        keyboard = false
+                    }
+                    else {
+                        let alert = UIAlertController(title: "Alert", message: "Please fill in all field entries before placing icons!", preferredStyle: .alert)
+                        let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
+                        alert.addAction(action)
+                        present(alert, animated: true, completion: nil)
+                    }
+                }
+            } else {
+                let alert = UIAlertController(title: "Alert", message: "Insert blueprint image", preferredStyle: .alert)
+                let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
+                alert.addAction(action)
+                present(alert, animated: true, completion: nil)
             }
         }
         saved = false
-        print("touch")
+        print("{touch}")
+    }
+    
+    func createTable() {
+//        print("CREATED TABLE")
+        
+        let createTable = self.iconsTable.create { table in
+            table.column(self.id, primaryKey: true)
+            table.column(self.name, unique: true)
+            table.column(self.type)
+            table.column(self.location)
+            table.column(self.color)
+        }
+        do {
+            try self.database.run(createTable)
+            print("TABLE GOT CREATED")
+        } catch {
+            print(error)
+        }
     }
     
     func insertIcon() -> Bool {
