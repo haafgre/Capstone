@@ -29,7 +29,7 @@ class CanvasView: UIView {
      
      override func draw(_ rect: CGRect) {
          super.draw(rect)
-         
+         print("REMOVE MEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
        guard let context = UIGraphicsGetCurrentContext() else {
              return
          }

@@ -119,8 +119,29 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
         initializeHideKeyboard()
         
         do{
+            let fManager = FileManager.default
+            guard let url = fManager.urls(
+                for: .documentDirectory,
+                in: .userDomainMask
+            ).first else {
+                return
+            }
+            let newFolderUrl = url
+                .appendingPathComponent("\(_projectName)")
+            do {
+                try fManager.createDirectory(
+                    at: newFolderUrl,
+                    withIntermediateDirectories: true,
+                    attributes: [:]
+                )
+            }
+            catch {
+                print(error)
+            }
+            
             let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            let fileUrl = documentDirectory.appendingPathComponent("icons").appendingPathExtension("sqlite3")
+            let fileUrl = documentDirectory.appendingPathComponent("\(_projectName)/\(_projectName)-icons").appendingPathExtension("sqlite3")
+            print(fileUrl)
             let database = try Connection(fileUrl.path)
             self.database = database
         } catch {
@@ -141,68 +162,35 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
         return .landscapeRight
     }
     
-    func setProjectName() {
-
-        let alert = UIAlertController(title: "Name Blueprint Project", message: nil, preferredStyle: .alert)
-        alert.addTextField { tf in
-            tf.placeholder = "Name" }
-        let action = UIAlertAction(title: "Submit", style: .default) { (_) in
-            self._projectName = (alert.textFields?.first?.text)!
-        }
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
-        print("???????????????????????????????????")
-    }
-    
     /* Uploads the photogallery and allows user select image and zoom in/out*/
     @IBAction func onClickUploadImage(_ sender: Any) {
-        _projectName = projectName.text!
+        let vc = UIImagePickerController()
         
-        //if (_projectName != "") {
-            let vc = UIImagePickerController()
-        
-            // Suggested to use PHPicker
-            vc.sourceType = .photoLibrary
-            vc.delegate = self
-            vc.allowsEditing = true
-            present(vc, animated: true)
-            saved = false
-            uploaded = true
-            //UploadingImageStack.isHidden = true
-            //Canvas.isHidden = true
-            //(sender as! UIButton).isHidden = true
-        //}
-        //else {
-        //    print("Name the project first before uploading an image")
-        //}
+        // Suggested to use PHPicker
+        vc.sourceType = .photoLibrary
+        vc.delegate = self
+        vc.allowsEditing = true
+        present(vc, animated: true)
+        saved = false
+        uploaded = true
+
     }
     
     @IBAction func onClickCamera(_ sender: Any) {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            _projectName = projectName.text!
-            //if (_projectName != "") {
-                let vc = UIImagePickerController()
-                vc.delegate = self
-                vc.sourceType = .camera;
-                vc.allowsEditing = true
-                present(vc, animated: true, completion: nil)
-                saved = false
-                uploaded = true
-                //UploadingImageStack.isHidden = true
-                //Canvas.isHidden = true
-                //(sender as! UIButton).isHidden = true
-            //}
-            //else{
-            //    print("Name the project first before uploading an image")
-            //}
+            let vc = UIImagePickerController()
+            vc.delegate = self
+            vc.sourceType = .camera;
+            vc.allowsEditing = true
+            present(vc, animated: true, completion: nil)
+            saved = false
+            uploaded = true
+
         }
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         listIcons()
-        _projectName = projectName.text!
-        //projectNameHeader.text = _projectName
-        _projectName = _projectName.trimmingCharacters(in: .whitespaces)
         
         if (_projectName != "" && saved == false && uploaded == true){
             print("Annotes: \(annotes)")
@@ -335,15 +323,11 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                 //CircleView().selectedColor = colorPoint
                 
                 if (iconName.text != "" && iconType.text != "" && iconLocation.text != "") {
-                    do {
-                        let success = insertIcon()
-                        if (success == true && setIcon == true) {
-                            let circleView = CircleView(selectedColor: colorPoint,frame: CGRect(x: circleCenter.x, y: circleCenter.y, width: circleWidth, height: circleHeight))
-                            view.addSubview(circleView)
-                            setIcon = false
-                        }
-                    } catch {
-                        print(error)
+                    let success = insertIcon()
+                    if (success == true && setIcon == true) {
+                        let circleView = CircleView(selectedColor: colorPoint,frame: CGRect(x: circleCenter.x-7.5, y: circleCenter.y-7.5, width: circleWidth, height: circleHeight))
+                        view.addSubview(circleView)
+                        setIcon = false
                     }
                 }
                 else if (iconName.text == "" || iconType.text == "" || iconLocation.text == "") {
@@ -358,6 +342,11 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                         present(alert, animated: true, completion: nil)
                     }
                 }
+            } else {
+                let alert = UIAlertController(title: "Alert", message: "Insert blueprint image", preferredStyle: .alert)
+                let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
+                alert.addAction(action)
+                present(alert, animated: true, completion: nil)
             }
         }
         saved = false

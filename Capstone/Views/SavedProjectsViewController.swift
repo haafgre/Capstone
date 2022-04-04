@@ -22,20 +22,20 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
         
         /* Reads document directory and directory contents (add-on: removes all that are not png) */
         
-        do {
+        /*do {
             // Get the document directory url
-            let documentDirectory = try FileManager.default.url(
+            /*let documentDirectory = try FileManager.default.url(
                 for: .documentDirectory,
                 in: .userDomainMask,
                 appropriateFor: nil,
                 create: true
-            )
+            )*/
             //print("documentDirectory", documentDirectory.path)
             // Get the directory contents urls (including subfolders urls)
-            let directoryContents = try FileManager.default.contentsOfDirectory(
+            /*let directoryContents = try FileManager.default.contentsOfDirectory(
                 at: documentDirectory,
                 includingPropertiesForKeys: nil
-            )
+            )*/
             //print("directoryContents:", directoryContents.map { $0.localizedName ?? $0.lastPathComponent })
             /*for url in directoryContents {
                 print(url.localizedName ?? url.lastPathComponent)
@@ -51,12 +51,12 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
             }*/
 
             // if you want to get all png files located at the documents directory:
-            let pngs = directoryContents.filter(\.isPNG).map { $0.localizedName ?? $0.lastPathComponent }
-            //print("pngs:", pngs)
+            /*let pngs = directoryContents.filter(\.isPNG).map { $0.localizedName ?? $0.lastPathComponent }
+            print("pngs:", pngs)*/
             
         } catch {
             print(error)
-        }
+        }*/
         
         
         /* Removes only png's */
