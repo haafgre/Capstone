@@ -49,7 +49,7 @@ class CanvasView: UIView {
          }
      }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    /*override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         var annotes : Dictionary<String, Array<Dictionary<String, CGFloat>>> = ["accesspoint": [[:]]]
         
         for touch in touches {
@@ -82,7 +82,7 @@ class CanvasView: UIView {
         }
         //saved = false
         //print("touch")
-    }
+    }*/
     
     
      //override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

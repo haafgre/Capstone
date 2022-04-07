@@ -60,6 +60,7 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
         let loadedImage = load(fileName: selectedImage)
         loadedView.contentMode = .scaleAspectFit
         loadedView.image = loadedImage
+        globalImage = loadedImage
         
         do{
             let fManager = FileManager.default

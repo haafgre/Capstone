@@ -169,7 +169,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
         // Suggested to use PHPicker
         vc.sourceType = .photoLibrary
         vc.delegate = self
-        vc.allowsEditing = true
+        vc.allowsEditing = false
         present(vc, animated: true)
         saved = false
         uploaded = true
@@ -189,6 +189,28 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
         }
     }
     
+    @IBAction func toCameraRoll(_ sender: Any) {
+
+        //let rect : CGRect = CGRect(x: 10, y: 51, width: imageView.image!.size.width, height: imageView.image!.size.height)
+
+        UIGraphicsBeginImageContext(imageView.bounds.size);
+
+        let context : CGContext = UIGraphicsGetCurrentContext()!
+        context.translateBy(x: -10, y: -51);    // <-- shift everything up by 40px when drawing.
+
+        self.view.layer.render(in: context)
+        let img : UIImage  = UIGraphicsGetImageFromCurrentImageContext()!
+        
+        UIGraphicsEndImageContext();
+
+        if (globalImage != nil){
+            UIImageWriteToSavedPhotosAlbum(img,self, nil, nil)
+            //UIImageWriteToSavedPhotosAlbum(globalImage!, nil, nil, nil);
+            print("Saved to camera roll.")
+        } else {
+            print("NIL~")
+        }
+    }
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         listIcons()
         
@@ -225,6 +247,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     @IBAction func blue(_ sender: Any) {
         //print("Clicked blue")
+        dismissMyKeyboard()
         (sender as AnyObject).setImage( UIImage(systemName: "circle.inset.filled"), for: [])
         Green.setImage(UIImage(systemName: "circle.fill"), for: [])
         Red.setImage(UIImage(systemName: "circle.fill"), for: [])
@@ -235,6 +258,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     @IBAction func green(_ sender: Any) {
         //print("Clicked green")
+        dismissMyKeyboard()
         (sender as AnyObject).setImage( UIImage(systemName: "circle.inset.filled"), for: [])
         Blue.setImage(UIImage(systemName: "circle.fill"), for: [])
         Red.setImage(UIImage(systemName: "circle.fill"), for: [])
@@ -244,6 +268,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     @IBAction func red(_ sender: Any) {
         //print("Clicked red")
+        dismissMyKeyboard()
         (sender as AnyObject).setImage( UIImage(systemName: "circle.inset.filled"), for: [])
         Blue.setImage(UIImage(systemName: "circle.fill"), for: [])
         Green.setImage(UIImage(systemName: "circle.fill"), for: [])
@@ -253,6 +278,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     @IBAction func yellow(_ sender: Any) {
         //print("Clicked yellow")
+        dismissMyKeyboard()
         (sender as AnyObject).setImage( UIImage(systemName: "circle.inset.filled"), for: [])
         Blue.setImage(UIImage(systemName: "circle.fill"), for: [])
         Green.setImage(UIImage(systemName: "circle.fill"), for: [])
@@ -273,9 +299,23 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     @objc func dismissMyKeyboard(){
         //endEditing causes the view (or one of its embedded text fields) to resign the first responder status.
         //In short- Dismiss the active keyboard.
+        keyboard = false
         view.endEditing(true)
     }
     
+    
+    @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            imageView.contentMode = .scaleAspectFit
+            imageView.image = image
+            globalImage = image
+        }
+        if (imageView.image != nil) {
+            Canvas.isHidden = true
+        }
+
+        dismiss(animated: true, completion: nil)
+    }/*
     @objc func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[UIImagePickerController.InfoKey(rawValue: "UIImagePickerControllerEditedImage")] as? UIImage {
@@ -284,20 +324,24 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
             imageView.image = image
             //manager.saveImage(image, "\(_projectName)", annotes)
             globalImage = image
+            picker.dismiss(animated: true, completion: nil)
+
         }
         //manager.saveImage(image!, "\(_projectName)", annotes)
         if (imageView.image != nil) {
             Canvas.isHidden = true
         }
-        picker.dismiss(animated: true, completion: nil)
-    }
+        //picker.dismiss(animated: true, completion: nil)
+    }*/
     
     @objc func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        dismissMyKeyboard()
+        if (keyboard == true){
+            dismissMyKeyboard()
+        } else {
         for touch in touches {
             if uploaded != false {
                 // Set the Center of the Circle
@@ -326,7 +370,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                     let success = insertIcon()
                     if (success == true && setIcon == true) {
                         let circleView = CircleView(selectedColor: colorPoint,frame: CGRect(x: circleCenter.x-7.5, y: circleCenter.y-7.5, width: circleWidth, height: circleHeight))
-                        var label = UILabel(frame: CGRect(x: circleCenter.x, y: circleCenter.y, width: 250, height: 25))
+                        let label = UILabel(frame: CGRect(x: circleCenter.x, y: circleCenter.y, width: 250, height: 25))
                         label.center = CGPoint(x: circleCenter.x, y: circleCenter.y+15)
                         label.textAlignment = .center
                         if (colorPoint == "blue"){
@@ -341,7 +385,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                         else if (colorPoint == "red"){
                             label.textColor = UIColor.red
                         }
-                
+                        label.shadowColor = UIColor.black
                         label.text = iconName.text
                         view.addSubview(circleView)
                         view.addSubview(label)
@@ -366,6 +410,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                 alert.addAction(action)
                 present(alert, animated: true, completion: nil)
             }
+        }
         }
         saved = false
         print("{touch}")
@@ -469,3 +514,45 @@ extension Dictionary where Key: Encodable, Value: Encodable {
         try data.write(to: url)
     }
 }
+
+extension UIImageView {
+    var contentClippingRect: CGRect {
+        guard let image = image else { return bounds }
+        //guard contentMode == .scaleAspectFit else { return bounds }
+        guard image.size.width > 0 && image.size.height > 0 else { return bounds }
+
+        let scale: CGFloat
+        if image.size.width > image.size.height {
+            scale = bounds.width / image.size.width
+        } else {
+            scale = bounds.height / image.size.height
+        }
+
+        let size = CGSize(width: image.size.width * scale, height: image.size.height * scale)
+        let x = (bounds.width - size.width) / 2.0
+        let y = (bounds.height - size.height) / 2.0
+
+        return CGRect(x: x, y: y, width: size.width, height: size.height)
+    }
+}
+
+/*extension UIImageView {
+
+    var imageRect: CGRect {
+        guard let imageSize = self.image?.size else { return self.frame }
+
+        let scale = UIScreen.main.scale
+
+        let imageWidth = (imageSize.width / scale).rounded()
+        let frameWidth = self.frame.width.rounded()
+
+        let imageHeight = (imageSize.height / scale).rounded()
+        let frameHeight = self.frame.height.rounded()
+
+        let ratio = max(frameWidth / imageWidth, frameHeight / imageHeight)
+        let newSize = CGSize(width: imageWidth * ratio, height: imageHeight * ratio)
+        let newOrigin = CGPoint(x: self.center.x - (newSize.width / 2), y: self.center.y - (newSize.height / 2))
+        return CGRect(origin: newOrigin, size: newSize)
+    }
+
+}*/
