@@ -86,6 +86,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     @IBOutlet weak var iconType: UITextField!
     @IBOutlet weak var iconLocation: UITextField!
     
+    @IBOutlet weak var tree: UIView!
     //public var image: UIImage = UIImage()
     //var image:UIImage? = nil
     var globalImage:UIImage? = nil
@@ -190,15 +191,45 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     }
     
     @IBAction func toCameraRoll(_ sender: Any) {
-
-        //let rect : CGRect = CGRect(x: 10, y: 51, width: imageView.image!.size.width, height: imageView.image!.size.height)
-
-        UIGraphicsBeginImageContext(imageView.bounds.size);
+/*
+        /*UIGraphicsBeginImageContextWithOptions(imageView.frame.size, imageView.isOpaque, 0.0)
+        imageView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let imageWithLines = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        */
+        //let rect : CGRect = CGRect() //Your view size from where you want to make UIImage
+        UIGraphicsBeginImageContextWithOptions(imageView.frame.size, imageView.isOpaque, 0.0);
+        self.view.layer.render(in: UIGraphicsGetCurrentContext()!)
+        //let context : CGContextRef = UIGraphicsGetCurrentContext()
+        //self.view.layer.renderInContext(context)
+        let img = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext();
+        // start
+        /*UIGraphicsBeginImageContext(imageView.bounds.size);
 
         let context : CGContext = UIGraphicsGetCurrentContext()!
-        context.translateBy(x: -10, y: -51);    // <-- shift everything up by 40px when drawing.
+        //context.translateBy(x: -10, y: -51);    // <-- shift everything up by 40px when drawing.
 
         self.view.layer.render(in: context)
+        let img : UIImage  = UIGraphicsGetImageFromCurrentImageContext()!
+        
+        UIGraphicsEndImageContext();*/
+        // end
+
+        // NOW you have the image to save
+        UIImageWriteToSavedPhotosAlbum(img!, self, nil, nil)
+    }
+*/
+        //let rect : CGRect = CGRect(x: 10, y: 51, width: imageView.image!.size.width, height: imageView.image!.size.height)
+        //let rect : CGRect = CGRect()
+        //UIGraphicsBeginImageContext(rect.size);
+
+        UIGraphicsBeginImageContextWithOptions(imageView.frame.size, imageView.isOpaque, 0.0)
+        //context.translateBy(x: -10, y: -51);    // <-- shift everything up by 40px when drawing.
+
+        //self.view.layer.render(in: context)
+        
+        self.imageView.layer.render(in: UIGraphicsGetCurrentContext()!)
         let img : UIImage  = UIGraphicsGetImageFromCurrentImageContext()!
         
         UIGraphicsEndImageContext();
@@ -211,6 +242,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
             print("NIL~")
         }
     }
+
     @IBAction func saveButtonPressed(_ sender: UIButton) {
         listIcons()
         
@@ -312,6 +344,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
         }
         if (imageView.image != nil) {
             Canvas.isHidden = true
+            //UploadingImageStack.isHidden = true
         }
 
         dismiss(animated: true, completion: nil)
@@ -345,7 +378,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
         for touch in touches {
             if uploaded != false {
                 // Set the Center of the Circle
-                let circleCenter = touch.location(in: view)
+                let circleCenter = touch.location(in: imageView)
                 let dict = ["x": circleCenter.x, "y": circleCenter.y]
             
                 myArray.append(dict)
@@ -387,8 +420,12 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                         }
                         label.shadowColor = UIColor.black
                         label.text = iconName.text
-                        view.addSubview(circleView)
-                        view.addSubview(label)
+                        circleView.isUserInteractionEnabled = true
+                        circleView.isHighlighted = true
+                        circleView.addTarget(self, action: #selector(pressed(_ :)), for: .touchUpInside)
+                        label.isUserInteractionEnabled = true
+                        imageView.addSubview(circleView)
+                        imageView.addSubview(label)
                         setIcon = false
                     }
                 }
@@ -402,6 +439,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                         let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
                         alert.addAction(action)
                         present(alert, animated: true, completion: nil)
+                        continue
                     }
                 }
             } else {
@@ -450,10 +488,10 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
             return true
         } catch {
             print(error)
-            let alert = UIAlertController(title: "Alert", message: "You already used that name for that type, try using a different name or 'Update Icon' if you made changes.", preferredStyle: .alert)
+            /*let alert = UIAlertController(title: "Alert", message: "You already used that name for that type, try using a different name or 'Update Icon' if you made changes.", preferredStyle: .alert)
             let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
             alert.addAction(action)
-            present(alert, animated: true, completion: nil)
+            present(alert, animated: true, completion: nil)*/
             return false
         }
     }
@@ -504,6 +542,10 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
         }
         
     }
+    
+    @objc func pressed(_ sender: UIButton) {
+           print("Pressed")
+     }
 }
 
 

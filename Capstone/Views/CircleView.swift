@@ -7,7 +7,8 @@
 //import other file, get a variable from file, set variable to that
 import UIKit
 
-class CircleView: UIView {
+/* NOT A VIEW */
+class CircleView: UIButton {
 
     var selectedColor: String = "blue"
     //var i: Int?
@@ -22,7 +23,13 @@ class CircleView: UIView {
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
+        //self.layer.borderWidth = 1
+        //self.layer.borderColor = UIColor.red.cgColor
+        //self.isUserInteractionEnabled = true
+        //self.is
     }
+
 /*    public var selectedColor: String = "yellow"
     
     override init(frame: CGRect) {
@@ -36,7 +43,7 @@ class CircleView: UIView {
     }*/
     
     
-    private func drawOval() {
+    public func drawOval() {
         let path = UIBezierPath(ovalIn: self.bounds)
             
         let shapeLayer = CAShapeLayer()
@@ -56,11 +63,24 @@ class CircleView: UIView {
         }
         shapeLayer.lineWidth = 3
         shapeLayer.strokeColor = UIColor.black.cgColor
-            
         self.layer.addSublayer(shapeLayer)
     }
     
-    @objc func labelTapped(_ sender: UITapGestureRecognizer) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //self.isSelected
+        let touch = touches.first;
+        let location = touch?.location(in: self.superview);
+        if(location != nil)
+        {
+        self.frame.origin = CGPoint(x: location!.x-self.frame.size.width/2, y: location!.y-self.frame.size.height/2);
+        }
+    }
+
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+
+    }
+    
+    /*@objc func labelTapped(_ sender: UITapGestureRecognizer) {
             print("labelTapped")
         }
     
@@ -70,7 +90,7 @@ class CircleView: UIView {
         self.isUserInteractionEnabled = true
         self.addGestureRecognizer(labelTap)
         
-    }
+    }*/
     /*override func draw(_ rect: CGRect) {
         // Get the Graphics Context
         if let context = UIGraphicsGetCurrentContext() {

@@ -448,6 +448,7 @@
                         <outlet property="iconType" destination="lcr-iD-sgP" id="VEj-iS-fal"/>
                         <outlet property="imageView" destination="ZHh-hb-O22" id="for-qh-jZF"/>
                         <outlet property="projectSave" destination="t7z-xQ-I5w" id="BLB-g5-baz"/>
+                        <outlet property="tree" destination="ZBu-Lq-lGj" id="b5F-5Z-SJK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d3l-PW-BlI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -944,7 +945,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ynB-19-fGs"/>
+        <segue reference="SzD-jC-JAr"/>
         <segue reference="Elm-Jz-eZg"/>
     </inferredMetricsTieBreakers>
     <resources>
