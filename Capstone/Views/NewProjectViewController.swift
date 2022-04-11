@@ -88,6 +88,9 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     @IBOutlet weak var iconLocation: UITextField!
     var iconID : Int = 0
     var selectedIconID = 0
+    @IBOutlet weak var selectedIconName: UILabel!
+    @IBOutlet weak var selectedIconType: UILabel!
+    @IBOutlet weak var selectedIconLocation: UILabel!
     let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
     //label.center = CGPoint(x: 160, y: 285)
     //label.textAlignment = .center
@@ -613,6 +616,9 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                 btn.isHidden = true
                 /*iconID = iconID - 1*/
                 /*selectedIconID = 0*/
+                selectedIconName.text = ""
+                selectedIconType.text = ""
+                selectedIconLocation.text = ""
             }
         }
         
@@ -644,6 +650,19 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                 let largeBoldDoc = UIImage(systemName: "circle.fill", withConfiguration: largeConfig)
                 btn.setImage(largeBoldDoc, for: .normal)
             }
+        }
+        do {
+            let icons = try self.database.prepare(self.iconsTable)
+            for icon in icons {
+                if (icon[self.id] == sender?.tag) {
+                    selectedIconName.text = icon[self.name]
+                    selectedIconType.text = icon[self.type]
+                    selectedIconLocation.text = icon[self.location]
+                }
+                //print("iconID: \(icon[self.id]), name: \(icon[self.name]), type: \(icon[self.type]), location: \(icon[self.location]), color: \(icon[self.color])")
+            }
+        } catch {
+            print(error)
         }
     }
 }
