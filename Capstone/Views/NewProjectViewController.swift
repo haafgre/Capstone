@@ -68,6 +68,7 @@ class LocalFileManager {
 
 class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
+    @IBOutlet weak var title_lbl: UILabel!
     @IBOutlet weak var canvasView: CanvasView!
     @IBOutlet var imageView: UIImageView!
     @IBOutlet weak var projectSave: UIButton!
@@ -85,11 +86,17 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     @IBOutlet weak var iconName: UITextField!
     @IBOutlet weak var iconType: UITextField!
     @IBOutlet weak var iconLocation: UITextField!
+    var iconID : Int = 0
+    var selectedIconID = 0
+    let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
+    //label.center = CGPoint(x: 160, y: 285)
+    //label.textAlignment = .center
     
     @IBOutlet weak var tree: UIView!
     //public var image: UIImage = UIImage()
     //var image:UIImage? = nil
     var globalImage:UIImage? = nil
+    var allButtons: [UIButton] = []
     
     let manager = LocalFileManager.instance
     
@@ -116,9 +123,11 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     let color = Expression<String>("color")
     var iconArray = [String]()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeHideKeyboard()
+        title_lbl.text = _projectName
         
         do{
             let fManager = FileManager.default
@@ -237,7 +246,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
         if (globalImage != nil){
             UIImageWriteToSavedPhotosAlbum(img,self, nil, nil)
             //UIImageWriteToSavedPhotosAlbum(globalImage!, nil, nil, nil);
-            print("Saved to camera roll.")
+            /*print("Saved to camera roll.")*/
         } else {
             print("NIL~")
         }
@@ -247,9 +256,9 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
         listIcons()
         
         if (_projectName != "" && saved == false && uploaded == true){
-            print("Annotes: \(annotes)")
+            /*print("Annotes: \(annotes)")*/
             manager.saveImage(globalImage!, "\(_projectName)", annotes)
-            print(_projectName)
+            /*print(_projectName)*/
             saved = true
             
             let alert = UIAlertController(title: "Saving", message: "Project saved", preferredStyle: .alert)
@@ -385,10 +394,10 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
             
                 annotes = ["accesspoint": myArray]
             
-                print("Annotes: ", annotes)
+                /*print("Annotes: ", annotes)*/
             
                 // Set a Circle Radius
-                let circleWidth = CGFloat(15)
+                let circleWidth = CGFloat(25)
                 let circleHeight = circleWidth
                 
                 // Create a new CircleView
@@ -401,10 +410,67 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                 
                 if (iconName.text != "" && iconType.text != "" && iconLocation.text != "") {
                     let success = insertIcon()
+                    
                     if (success == true && setIcon == true) {
-                        let circleView = CircleView(selectedColor: colorPoint,frame: CGRect(x: circleCenter.x-7.5, y: circleCenter.y-7.5, width: circleWidth, height: circleHeight))
-                        let label = UILabel(frame: CGRect(x: circleCenter.x, y: circleCenter.y, width: 250, height: 25))
-                        label.center = CGPoint(x: circleCenter.x, y: circleCenter.y+15)
+                        //let circleView = CircleView(selectedColor: colorPoint,frame: CGRect(x: circleCenter.x-7.5, y: circleCenter.y-7.5, width: circleWidth, height: circleHeight))
+                        //var strIconID = String(IconID)
+                        //var btnIconID =
+                        let btnIconID = UIButton(frame: CGRect(x: circleCenter.x-7.5, y: circleCenter.y-7.5, width: circleWidth, height: circleHeight))
+                        btnIconID.backgroundColor = .clear
+                        if (colorPoint == "blue") {
+                            btnIconID.tintColor = UIColor.blue //fillColor = UIColor.blue.cgColor
+                        }
+                        else if (colorPoint == "green") {
+                            btnIconID.tintColor = UIColor.green //fillColor = UIColor.green.cgColor
+                        }
+                        else if (colorPoint == "red") {
+                            btnIconID.tintColor = UIColor.red //fillColor = UIColor.red.cgColor
+                        }
+                        else if (colorPoint == "yellow") {
+                            btnIconID.tintColor = UIColor.yellow //fillColor = UIColor.yellow.cgColor
+                        }
+                        //btnIconID.setTitle("Test Button", for: .normal)
+                        let largeConfig = UIImage.SymbolConfiguration(pointSize: 340, weight: .bold, scale: .large)
+                               
+                        let largeBoldDoc = UIImage(systemName: "circle.fill", withConfiguration: largeConfig)
+
+                        //button.setImage(largeBoldDoc, for: .normal)
+                        btnIconID.setImage(largeBoldDoc, for: .normal)
+                        //btnIconID.setBackgroundImage(UIImage(systemName: "circle.inset.filled"), for: .highlighted)
+                        //btnIconID.setImage(UIImage(systemName: "circle.fill"), for: [])
+                        btnIconID.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+                        
+                        
+                        // FIXME: BUGGY ... not buttons anymore?
+                        print("allButtons: \(allButtons.count)")
+                        //btnIconID.tag = allButtons.count //iconID
+                        print("CREATED ICON WITH TAG ID -> \(iconID) ")
+                        /*var icon : SQLite.Row
+                        do {
+                            let icons = try self.database.prepare(self.iconsTable)
+                            for icon in icons {
+                                print("iconID: \(icon[self.id]), name: \(icon[self.name]), type: \(icon[self.type]), location: \(icon[self.location]), color: \(icon[self.color])")
+                            }
+                        } catch {
+                            print(error)
+                        }*/
+                        iconID = Int(database.lastInsertRowid)
+                        print("HERE -> \(database.lastInsertRowid)")
+                        btnIconID.tag = iconID
+                        imageView.addSubview(btnIconID)
+                        //print("allButtons after: \(allButtons.count)")
+                        //print("ID NUM: \(btnIconID.tag)")
+                        //if(allButtons.isEmpty){
+                        //     print("EMPTY")
+                        //}
+
+                        //iconID = iconID + 1*/
+                        
+                        
+                        //let label = UILabel(frame: CGRect(x: circleCenter.x, y: circleCenter.y, width: 250, height: 25))
+                        //label.center = CGPoint(x: circleCenter.x, y: circleCenter.y+25)
+                        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 250, height: 25))
+                        label.center = CGPoint(x: 10, y: 30)
                         label.textAlignment = .center
                         if (colorPoint == "blue"){
                             label.textColor = UIColor.blue
@@ -420,12 +486,13 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                         }
                         label.shadowColor = UIColor.black
                         label.text = iconName.text
-                        circleView.isUserInteractionEnabled = true
-                        circleView.isHighlighted = true
-                        circleView.addTarget(self, action: #selector(pressed(_ :)), for: .touchUpInside)
-                        label.isUserInteractionEnabled = true
-                        imageView.addSubview(circleView)
-                        imageView.addSubview(label)
+                        //circleView.isUserInteractionEnabled = true
+                        //circleView.isHighlighted = true
+                        
+                        //circleView.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+                        //label.isUserInteractionEnabled = true
+                        //imageView.addSubview(circleView)
+                        btnIconID.addSubview(label)
                         setIcon = false
                     }
                 }
@@ -474,6 +541,11 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     
     func insertIcon() -> Bool {
         print("Inserting")
+        /*let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 21))
+        label.center = CGPoint(x: 160, y: 285)
+        label.textAlignment = .center*/
+        label.text = String(iconID)
+        //self.view.addSubview(label)
         guard let name = iconName.text,
               let type = iconType.text,
               let location = iconLocation.text
@@ -485,6 +557,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
             try self.database.run(insertIcon)
             print("INSERTED ICON DATA")
             setIcon = true
+            /*iconID = iconID + 1*/
             return true
         } catch {
             print(error)
@@ -528,24 +601,51 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     }
     
     @IBAction func deleteIcon(_ sender: Any) {
-        print("Deleting")
-        guard let name = iconName.text
-            else {return}
-        let icon = self.iconsTable.filter(self.name == name)
+        print("Deleting data for iconID: SELECTEDID -> \(selectedIconID) ICONID -> \(iconID) SELFID -> \(self.id)")
+        //guard let _id =
+        //    else {return}
+        let icon = self.iconsTable.filter(self.id == selectedIconID)
         let deleteIcon = icon.delete()
+        allButtons = imageView.subviews
+                         .compactMap { $0 as? UIButton }
+        for btn in allButtons{
+            if btn.tag == selectedIconID {
+                btn.isHidden = true
+                /*iconID = iconID - 1*/
+                /*selectedIconID = 0*/
+            }
+        }
         
         do {
             try self.database.run(deleteIcon)
-            print("DELETED ICON DATA")
+            print("DELETED ICON DATA, NOW RESETING SELECTEDID: \(selectedIconID) ICONID -> \(iconID)")
+            listIcons()
         } catch {
             print(error)
         }
         
     }
     
-    @objc func pressed(_ sender: UIButton) {
-           print("Pressed")
-     }
+    @objc func buttonAction(_ sender: UIButton?) {
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 34, weight: .bold, scale: .large)
+               
+        let largeBoldDoc = UIImage(systemName: "circle.inset.filled", withConfiguration: largeConfig)
+        sender?.setImage(largeBoldDoc, for: .normal)
+        selectedIconID = sender!.tag
+        label.text = String(selectedIconID)
+        print("YOU SELECTEDICONID -> \(selectedIconID) ICONID -> \(iconID)")
+        allButtons = imageView.subviews
+                         .compactMap { $0 as? UIButton }
+    
+        for btn in allButtons{
+            if btn.tag != sender?.tag {
+                let largeConfig = UIImage.SymbolConfiguration(pointSize: 34, weight: .bold, scale: .large)
+                       
+                let largeBoldDoc = UIImage(systemName: "circle.fill", withConfiguration: largeConfig)
+                btn.setImage(largeBoldDoc, for: .normal)
+            }
+        }
+    }
 }
 
 

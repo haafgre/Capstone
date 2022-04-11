@@ -66,8 +66,7 @@ class CircleView: UIButton {
         self.layer.addSublayer(shapeLayer)
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        //self.isSelected
+    /*override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first;
         let location = touch?.location(in: self.superview);
         if(location != nil)
@@ -78,7 +77,7 @@ class CircleView: UIButton {
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
 
-    }
+    }*/
     
     /*@objc func labelTapped(_ sender: UITapGestureRecognizer) {
             print("labelTapped")

@@ -13,8 +13,11 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
     //@IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var myTableView: UITableView!
     
+    var hidecell = false
     var fileArray = [String]()
-    var tryfile = ""
+    var allCells: [UITableViewCell] = []
+    var tryfileEdit = ""
+    var tryfileDelete = ""
     //var fileArray = ["One", "two"]
     
     override func viewDidLoad()
@@ -126,8 +129,8 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
         //label.font = .systemFont(ofSize: 28)
         label.font = UIFont.boldSystemFont(ofSize: 28)
         label.textAlignment = NSTextAlignment.center
-        label.textColor = .yellow
-        label.backgroundColor = .gray
+        label.textColor = .black
+        label.backgroundColor = .systemOrange
 
         headerView.addSubview(label)
             
@@ -143,29 +146,67 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.deselectRow(at: indexPath, animated: true)
 
         let row = indexPath.row
-        self.tryfile = fileArray[row]
+        self.tryfileEdit = fileArray[row]
         //print("User selected: \(fileArray[row])")
     
-        /* FIXME: Highlights what gets clicked*/
         let selectedCell:UITableViewCell = tableView.cellForRow(at: indexPath)!
-        selectedCell.isSelected = true
+        
+        allCells = myTableView.subviews
+                         .compactMap { $0 as? UITableViewCell }
+        selectedCell.isHighlighted = true
+        for cell in allCells{
+            if cell != selectedCell {
+                cell.isHighlighted = false
+            }
+        }
+        //deleteBtn.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        print(hidecell)
+        if (hidecell == true){
+            selectedCell.isHidden = true
+            let point = myTableView.convert(CGPoint.zero, to: tableView)
+            guard let indexpath = myTableView.indexPathForRow(at: point) else {return}
+            fileArray.remove(at: indexpath.row)
+            myTableView.beginUpdates()
+            myTableView.deleteRows(at: [IndexPath(row: indexpath.row, section: 0)], with: .automatic)
+            myTableView.endUpdates()
+            hidecell = false
+            print("HERE")
+        }
+        //selectedCell.isSelected = true
         //selectedCell.contentView.backgroundColor = UIColor.white
         
     }
+    
+    /* FIXME: START*/
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+         
+         if editingStyle == .delete {
+             print("FILE: \(fileArray[indexPath.row])")
+             tryfileDelete = fileArray[indexPath.row]
+             deleteBTN()
+             fileArray.remove(at: indexPath.row)
+             myTableView.deleteRows(at: [indexPath], with: .automatic)
+             //deleteBTN()
+         }
+     }
+     // terms is array var
     
     
     @IBAction func editBTN(_ sender: Any) {
         self.performSegue(withIdentifier: "LoadedView", sender: self)
     }
     
-    @IBAction func deleteBTN(_ sender: Any) {
+    func deleteBTN() {
+        print("Button tapped")
+        hidecell = true
         let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let fileURL = URL(fileURLWithPath: tryfile, relativeTo: directoryURL)
+        let fileURL = URL(fileURLWithPath: tryfileDelete, relativeTo: directoryURL)
         
-        if (tryfile != ""){
+        if (tryfileDelete != ""){
             do {
-            
+                
                 try FileManager.default.removeItem(at: fileURL)
+                
                 //print("Delete \(tryfile)")
             } catch {
                 // Catch any errors
@@ -180,12 +221,36 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
         
     }
     
+    /*@objc func buttonAction(sender: UIButton!) {
+        print("Button tapped")
+        hidecell = true
+        let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let fileURL = URL(fileURLWithPath: tryfile, relativeTo: directoryURL)
+        
+        if (tryfile != ""){
+            do {
+                
+                try FileManager.default.removeItem(at: fileURL)
+                
+                //print("Delete \(tryfile)")
+            } catch {
+                // Catch any errors
+                print(error.localizedDescription)
+            }
+        } else {
+            let alert = UIAlertController(title: "Deleting", message: "No project selected yet", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+        }
+    }*/
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if(segue.identifier == "LoadedView"){
             let vc = segue.destination as! LoadedProjectViewController
-            vc.selectedImage = self.tryfile
+            vc.selectedImage = self.tryfileEdit
         }
     }
     
