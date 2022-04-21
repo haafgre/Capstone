@@ -11,6 +11,7 @@ import UIKit
 class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     //@IBOutlet weak var myTableView: UITableView!
+    @IBOutlet weak var editBTN: UIButton!
     @IBOutlet weak var myTableView: UITableView!
     
     var hidecell = false
@@ -22,7 +23,8 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewDidLoad()
     {
-        
+        //editBTN.isHidden = true
+        editBTN.isEnabled = false
         /* Reads document directory and directory contents (add-on: removes all that are not png) */
         
         /*do {
@@ -75,6 +77,7 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
         } catch  { print(error) } */
         
         // /var/mobile/Containers/Data/Application/A1916161-D3BC-4613-8FAA-FE16A0C37DFD/Documents
+        
         let fileMngr = FileManager.default
         //let path = Bundle.main.resourcePath!
         let docs = fileMngr.urls(for: .documentDirectory, in: .userDomainMask)[0].path
@@ -131,6 +134,7 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
         label.textAlignment = NSTextAlignment.center
         label.textColor = .black
         label.backgroundColor = .systemOrange
+        
 
         headerView.addSubview(label)
             
@@ -154,6 +158,8 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
         allCells = myTableView.subviews
                          .compactMap { $0 as? UITableViewCell }
         selectedCell.isHighlighted = true
+        editBTN.backgroundColor = UIColor.systemBlue
+        editBTN.isEnabled = true
         for cell in allCells{
             if cell != selectedCell {
                 cell.isHighlighted = false
@@ -250,7 +256,7 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
         
         if(segue.identifier == "LoadedView"){
             let vc = segue.destination as! LoadedProjectViewController
-            vc.selectedImage = self.tryfileEdit
+            vc._projectName = self.tryfileEdit
         }
     }
     

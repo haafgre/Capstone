@@ -15,7 +15,7 @@ class LocalFileManager {
     static let instance = LocalFileManager()
     
     /* FIXME: Change func name to saveProject */
-    func saveImage(_ image: UIImage, _ imageName: String,_ annotations: Dictionary<String, Array<Dictionary<String, CGFloat>>> ) {
+    func saveImage(_ image: UIImage, _ imageName: String,_ annotations: Dictionary<Int, Array<Dictionary<String, CGFloat>>> ) {
 
         let fManager = FileManager.default
         guard let url = fManager.urls(
@@ -45,7 +45,7 @@ class LocalFileManager {
             try
             bluePrint?.write(to: path!)
             // write to file
-            print("Success")
+            print("Image Saved")
         } catch let error {
             print("Error saving. \(error)")
         }
@@ -112,10 +112,13 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     var uploaded = false
     var keyboard = false
     public var _projectName: String = ""
-    public var annotes : Dictionary<String, Array<Dictionary<String, CGFloat>>> = ["accesspoint": [[:]]]
+    public var annotes = Dictionary<Int, Array<Dictionary<String, CGFloat>>>() //= ["accesspoint": [[:]]]
     public var myArray = [Dictionary<String, CGFloat>]()
     
-    
+    var x = CGFloat()
+    var toFloatx = Float()
+    var y = CGFloat()
+    var toFloaty = Float()
     var colorPoint: String = "blue"
     var database: Connection!
     let iconsTable = Table("icons")
@@ -124,6 +127,8 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     let type = Expression<String>("type")
     let location = Expression<String>("location")
     let color = Expression<String>("color")
+    let _x = Expression<String>("x")
+    let _y = Expression<String>("y")
     var iconArray = [String]()
     
     
@@ -392,15 +397,15 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                 // Set the Center of the Circle
                 let circleCenter = touch.location(in: imageView)
                 let dict = ["x": circleCenter.x, "y": circleCenter.y]
-            
+                
                 myArray.append(dict)
             
-                annotes = ["accesspoint": myArray]
+                //annotes = ["accesspoint": myArray]
             
-                /*print("Annotes: ", annotes)*/
+                print("Annotes: ", annotes)
             
                 // Set a Circle Radius
-                let circleWidth = CGFloat(25)
+                let circleWidth = CGFloat(20)
                 let circleHeight = circleWidth
                 
                 // Create a new CircleView
@@ -412,6 +417,10 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                 //CircleView().selectedColor = colorPoint
                 
                 if (iconName.text != "" && iconType.text != "" && iconLocation.text != "") {
+                    x = circleCenter.x
+                    y = circleCenter.y
+                    toFloatx = Float(x)
+                    toFloaty = Float(y)
                     let success = insertIcon()
                     
                     if (success == true && setIcon == true) {
@@ -460,6 +469,13 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
                         iconID = Int(database.lastInsertRowid)
                         print("HERE -> \(database.lastInsertRowid)")
                         btnIconID.tag = iconID
+                        annotes[iconID] = myArray
+                        myArray = []
+/*                        x = circleCenter.x
+                        y = circleCenter.y
+                        toFloatx = Float(x)
+                        toFloaty = Float(y)*/
+                        //let stringFloat =  String(describing: toFloat)
                         imageView.addSubview(btnIconID)
                         //print("allButtons after: \(allButtons.count)")
                         //print("ID NUM: \(btnIconID.tag)")
@@ -533,6 +549,8 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
             table.column(self.type)
             table.column(self.location)
             table.column(self.color)
+            table.column(self._x)
+            table.column(self._y)
         }
         do {
             try self.database.run(createTable)
@@ -552,9 +570,11 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
         guard let name = iconName.text,
               let type = iconType.text,
               let location = iconLocation.text
+              //let stringFloatx = String(describing: toFloatx),
+              //let stringFloaty = String(describing: toFloaty)
               //let color
         else {return false}
-        let insertIcon = self.iconsTable.insert(self.name <- name, self.type <- type, self.location <- location, self.color <- colorPoint)
+        let insertIcon = self.iconsTable.insert(self.name <- name, self.type <- type, self.location <- location, self.color <- colorPoint, self._x <- String(describing: toFloatx), self._y <- String(describing: toFloaty))
         
         do {
             try self.database.run(insertIcon)
@@ -578,7 +598,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
         do {
             let icons = try self.database.prepare(self.iconsTable)
             for icon in icons {
-                print("iconID: \(icon[self.id]), name: \(icon[self.name]), type: \(icon[self.type]), location: \(icon[self.location]), color: \(icon[self.color])")
+                print("iconID: \(icon[self.id]), name: \(icon[self.name]), type: \(icon[self.type]), location: \(icon[self.location]), color: \(icon[self.color]), x: \(icon[self._x]), y: \(icon[self._y])")
             }
         } catch {
             print(error)
