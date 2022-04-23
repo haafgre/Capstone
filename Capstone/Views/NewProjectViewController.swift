@@ -655,6 +655,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     @objc func buttonAction(_ sender: UIButton?) {
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 34, weight: .bold, scale: .large)
                
+        //let largeBoldDoc = UIImage(systemName: "circle.inset.filled", withConfiguration: largeConfig)
         let largeBoldDoc = UIImage(systemName: "circle.inset.filled", withConfiguration: largeConfig)
         sender?.setImage(largeBoldDoc, for: .normal)
         selectedIconID = sender!.tag

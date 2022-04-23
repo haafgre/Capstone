@@ -10,64 +10,6 @@ import PhotosUI
 import UIKit
 import SQLite
 
-
-/*class LocalFileManager {
-    
-    static let instance = LocalFileManager()
-    
-    /* FIXME: Change func name to saveProject */
-    func saveImage(_ image: UIImage, _ imageName: String,_ annotations: Dictionary<String, Array<Dictionary<String, CGFloat>>> ) {
-
-        let fManager = FileManager.default
-        guard let url = fManager.urls(
-            for: .documentDirectory,
-            in: .userDomainMask
-        ).first else {
-            return
-        }
-        
-        let newFolderUrl = url
-            .appendingPathComponent("\(imageName)")
-        do {
-            try fManager.createDirectory(
-                at: newFolderUrl,
-                withIntermediateDirectories: true,
-                attributes: [:]
-            )
-        }
-        catch {
-            print(error)
-        }
-        
-        let bluePrint = image.pngData()
-
-        let path = documentDirectoryPath("\(imageName)")
-        do {
-            try
-            bluePrint?.write(to: path!)
-            // write to file
-            print("Success")
-        } catch let error {
-            print("Error saving. \(error)")
-        }
-    }
-    func documentDirectoryPath(_ imageName : String) -> URL? {
-        let path = FileManager.default.urls(for: .documentDirectory,
-                                               in: .userDomainMask).first?.appendingPathComponent("/\(imageName)/\(imageName).png")
-        return path
-    }
-        
-        /* FIXME: Writing to .txt file of annotes */
- /*       let fname : String = "\(imageName).txt"
-        let fileName = getPathFor(imageName: fname)
-        do {
-            try annotations.writeToURL(fileName!)
-        } catch {
-            print("Error saving, \(error)")
-        }*/
-}*/
-
-
 class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
 
     @IBOutlet weak var title_lbl: UILabel!
@@ -728,6 +670,7 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
     @objc func buttonAction(_ sender: UIButton?) {
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 34, weight: .bold, scale: .large)
                
+        //let largeBoldDoc = UIImage(systemName: "circle.inset.filled", withConfiguration: largeConfig)
         let largeBoldDoc = UIImage(systemName: "circle.inset.filled", withConfiguration: largeConfig)
         sender?.setImage(largeBoldDoc, for: .normal)
         selectedIconID = sender!.tag

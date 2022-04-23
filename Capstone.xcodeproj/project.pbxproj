@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		6C10811727DC4DE1007CB7B7 /* LoadedProjectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C10811627DC4DE1007CB7B7 /* LoadedProjectViewController.swift */; };
 		6C35AA8227E2B5CC00DF72AE /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C35AA8127E2B5CC00DF72AE /* CanvasView.swift */; };
-		6C8E630027F2755800AF81BA /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C8E62F227F2754300AF81BA /* SQLite.framework */; };
 		6C8E630127F2755800AF81BA /* SQLite.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 6C8E62F227F2754300AF81BA /* SQLite.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6C8E630327F2757500AF81BA /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C8E62F227F2754300AF81BA /* SQLite.framework */; };
 		6C8E631127F3F14500AF81BA /* BlueprintNamingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8E631027F3F14500AF81BA /* BlueprintNamingViewController.swift */; };
@@ -116,7 +115,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C8E630327F2757500AF81BA /* SQLite.framework in Frameworks */,
-				6C8E630027F2755800AF81BA /* SQLite.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,7 +226,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1320;
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1330;
 				TargetAttributes = {
 					6CF18BE127A2446200257E1A = {
 						CreatedOnToolsVersion = 13.2.1;
