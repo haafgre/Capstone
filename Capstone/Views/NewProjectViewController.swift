@@ -15,7 +15,6 @@ class LocalFileManager {
     static let instance = LocalFileManager()
 
     func saveProject(_ image: UIImage, _ imageName: String) {
-
         let fManager = FileManager.default
         guard let url = fManager.urls(
             for: .documentDirectory,
@@ -23,7 +22,6 @@ class LocalFileManager {
         ).first else {
             return
         }
-        
         let newFolderUrl = url
             .appendingPathComponent("\(imageName)")
         do {
@@ -36,11 +34,8 @@ class LocalFileManager {
         catch {
             print(error)
         }
-        
         let bluePrint = image.pngData()
-
         let path = documentDirectoryPath("\(imageName)")
-        
         // write to file
         do {
             try
@@ -49,6 +44,7 @@ class LocalFileManager {
             print("Error saving. \(error)")
         }
     }
+    
     func documentDirectoryPath(_ imageName : String) -> URL? {
         let path = FileManager.default.urls(for: .documentDirectory,
                                                in: .userDomainMask).first?.appendingPathComponent("/\(imageName)/\(imageName).png")
@@ -419,9 +415,7 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     }
     
     func insertIcon() -> Bool {
-
         label.text = String(iconID)
-
         guard let name = iconName.text,
               let type = iconType.text,
               let location = iconLocation.text
@@ -450,7 +444,6 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     }
     
     @IBAction func updateIcon(_ sender: Any) {
-        
         guard let name = iconName.text,
               let type = iconType.text,
               let location = iconLocation.text
@@ -467,7 +460,6 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
     }
     
     @IBAction func deleteIcon(_ sender: Any) {
-        //print("Deleting data for iconID: SELECTEDID -> \(selectedIconID) ICONID -> \(iconID) SELFID -> \(self.id)")
         let icon = self.iconsTable.filter(self.id == selectedIconID)
         let deleteIcon = icon.delete()
         allButtons = imageView.subviews
@@ -475,8 +467,6 @@ class NewProjectViewController: UIViewController, UITextFieldDelegate, UIImagePi
         for btn in allButtons{
             if btn.tag == selectedIconID {
                 btn.isHidden = true
-                /*iconID = iconID - 1*/
-                /*selectedIconID = 0*/
                 selectedIconName.text = ""
                 selectedIconType.text = ""
                 selectedIconLocation.text = ""

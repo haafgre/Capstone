@@ -81,7 +81,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="38" y="50"/>
+            <point key="canvasLocation" x="280" y="50"/>
         </scene>
         <!--Blueprint Naming View Controller-->
         <scene sceneID="sYd-cd-p47">
@@ -149,18 +149,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lBL-5n-rYZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="798.55072463768124" y="-696.42857142857144"/>
+            <point key="canvasLocation" x="800" y="-741"/>
         </scene>
         <!--New Project View Controller-->
         <scene sceneID="ejO-ND-ZJ0">
             <objects>
                 <viewController storyboardIdentifier="NewView" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="zJV-MV-YMB" customClass="NewProjectViewController" customModule="Capstone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xMv-Uq-Qwg">
-                        <rect key="frame" x="0.0" y="0.0" width="896" height="409"/>
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="461"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZHh-hb-O22">
-                                <rect key="frame" x="10" y="51" width="687.5" height="350"/>
+                                <rect key="frame" x="10" y="51" width="687.5" height="402"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" button="YES" image="YES"/>
@@ -417,10 +417,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GzM-L7-TDJ">
-                                <rect key="frame" x="10" y="51" width="687.5" height="350"/>
+                                <rect key="frame" x="10" y="51" width="687.5" height="402"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="AbO-a5-xOh">
-                                        <rect key="frame" x="283" y="141" width="121.5" height="68"/>
+                                        <rect key="frame" x="283" y="167" width="121.5" height="68"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zdd-IE-M2z">
                                                 <rect key="frame" x="0.0" y="0.0" width="121.5" height="23"/>
@@ -473,7 +473,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="l5E-0w-ilk"/>
-                    <size key="freeformSize" width="896" height="409"/>
+                    <size key="freeformSize" width="896" height="461"/>
                     <connections>
                         <outlet property="Blue" destination="UKR-YS-k34" id="lIq-K9-Bcb"/>
                         <outlet property="Canvas" destination="GzM-L7-TDJ" id="xZs-DP-Fth"/>
@@ -497,7 +497,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d3l-PW-BlI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1998.5507246376812" y="-696.09375"/>
+            <point key="canvasLocation" x="2088" y="-741"/>
         </scene>
         <!--Saved Projects View Controller-->
         <scene sceneID="cs4-Uj-Ky8">
@@ -555,11 +555,11 @@
             <objects>
                 <viewController storyboardIdentifier="ContinueView" modalTransitionStyle="crossDissolve" modalPresentationStyle="fullScreen" id="52a-3b-6dT" customClass="LoadedProjectViewController" customModule="Capstone" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="quZ-5m-Sf4">
-                        <rect key="frame" x="0.0" y="0.0" width="896" height="409"/>
+                        <rect key="frame" x="0.0" y="0.0" width="896" height="453"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qf9-Kk-sQ3">
-                                <rect key="frame" x="10" y="51" width="687.5" height="350"/>
+                                <rect key="frame" x="10" y="51" width="687.5" height="394"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <accessibility key="accessibilityConfiguration">
                                     <accessibilityTraits key="traits" button="YES" image="YES"/>
@@ -816,10 +816,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Anb-Da-9fG">
-                                <rect key="frame" x="10" y="51" width="687.5" height="350"/>
+                                <rect key="frame" x="10" y="51" width="687.5" height="394"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="AY0-fM-q47">
-                                        <rect key="frame" x="283" y="141" width="121.5" height="68"/>
+                                        <rect key="frame" x="283" y="163" width="121.5" height="68"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KSV-jw-Fsb">
                                                 <rect key="frame" x="0.0" y="0.0" width="121.5" height="23"/>
@@ -872,7 +872,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="pdN-k7-U47"/>
-                    <size key="freeformSize" width="896" height="409"/>
+                    <size key="freeformSize" width="896" height="453"/>
                     <connections>
                         <outlet property="Blue" destination="Uml-eY-Yau" id="B2l-zq-BIF"/>
                         <outlet property="Canvas" destination="Anb-Da-9fG" id="YK3-qa-c3d"/>
@@ -896,11 +896,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ILL-fB-wSs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2264" y="-280"/>
+            <point key="canvasLocation" x="2307" y="50"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="0MM-ht-hF7"/>
+        <segue reference="p3A-v8-SWM"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="camera" catalog="system" width="128" height="94"/>

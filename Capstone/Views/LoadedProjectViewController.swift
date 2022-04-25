@@ -69,6 +69,7 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         initializeHideKeyboard()
         title_lbl.text = _projectName
         
@@ -80,30 +81,9 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
         uploaded = true
         Canvas.isHidden = true
         
-        do{
-            let fManager = FileManager.default
-            guard let url = fManager.urls(
-                for: .documentDirectory,
-                in: .userDomainMask
-            ).first else {
-                return
-            }
-            let newFolderUrl = url
-                .appendingPathComponent("\(selectedImage)")
-            do {
-                try fManager.createDirectory(
-                    at: newFolderUrl,
-                    withIntermediateDirectories: true,
-                    attributes: [:]
-                )
-            }
-            catch {
-                print(error)
-            }
-            
+        do{            
             let documentDirectory = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
             let fileUrl = documentDirectory.appendingPathComponent("\(_projectName)/\(_projectName)-icons").appendingPathExtension("sqlite3")
-            print(fileUrl)
             let database = try Connection(fileUrl.path)
             self.database = database
         } catch {
@@ -120,6 +100,18 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
     // Specify the orientation.
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .landscapeRight
+    }
+    
+    private func load(fileName: String) -> UIImage? {
+        let fileURL = documentsUrl.appendingPathComponent("\(fileName)/\(fileName).png")
+ 
+        do {
+            let imageData = try Data(contentsOf: fileURL)
+            return UIImage(data: imageData)
+        } catch {
+            print("Error loading image : \(error)")
+        }
+        return nil
     }
     
     /* Uploads the photogallery and allows user select image and zoom in/out*/
@@ -249,18 +241,6 @@ class LoadedProjectViewController: UIViewController, UITextFieldDelegate, UIImag
         //In short- Dismiss the active keyboard.
         keyboard = false
         view.endEditing(true)
-    }
-    
-    private func load(fileName: String) -> UIImage? {
-        let fileURL = documentsUrl.appendingPathComponent("\(fileName)/\(fileName).png")
- 
-        do {
-            let imageData = try Data(contentsOf: fileURL)
-            return UIImage(data: imageData)
-        } catch {
-            print("Error loading image : \(error)")
-        }
-        return nil
     }
     
     
