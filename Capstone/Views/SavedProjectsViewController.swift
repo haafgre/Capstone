@@ -10,7 +10,6 @@ import UIKit
 
 class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    //@IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var editBTN: UIButton!
     @IBOutlet weak var myTableView: UITableView!
     
@@ -19,78 +18,19 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
     var allCells: [UITableViewCell] = []
     var tryfileEdit = ""
     var tryfileDelete = ""
-    //var fileArray = ["One", "two"]
     
     override func viewDidLoad()
     {
-        //editBTN.isHidden = true
+
         editBTN.isEnabled = false
-        /* Reads document directory and directory contents (add-on: removes all that are not png) */
-        
-        /*do {
-            // Get the document directory url
-            /*let documentDirectory = try FileManager.default.url(
-                for: .documentDirectory,
-                in: .userDomainMask,
-                appropriateFor: nil,
-                create: true
-            )*/
-            //print("documentDirectory", documentDirectory.path)
-            // Get the directory contents urls (including subfolders urls)
-            /*let directoryContents = try FileManager.default.contentsOfDirectory(
-                at: documentDirectory,
-                includingPropertiesForKeys: nil
-            )*/
-            //print("directoryContents:", directoryContents.map { $0.localizedName ?? $0.lastPathComponent })
-            /*for url in directoryContents {
-                print(url.localizedName ?? url.lastPathComponent)
-                //try FileManager.default.removeItem(at: url)
-            }
-            
-            // if you would like to hide the file extension
-            for var url in directoryContents {
-                url.hasHiddenExtension = true
-            }
-            for url in directoryContents {
-                //print(url.localizedName ?? url.lastPathComponent)
-            }*/
-
-            // if you want to get all png files located at the documents directory:
-            /*let pngs = directoryContents.filter(\.isPNG).map { $0.localizedName ?? $0.lastPathComponent }
-            print("pngs:", pngs)*/
-            
-        } catch {
-            print(error)
-        }*/
-        
-        
-        /* Removes only png's */
-        /* let documentsUrl =  FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-
-        do {
-            let fileURLs = try FileManager.default.contentsOfDirectory(at: documentsUrl,
-                                                                       includingPropertiesForKeys: nil,
-                                                                       options: .skipsHiddenFiles)
-            for fileURL in fileURLs where fileURL.pathExtension == "png" {
-                try FileManager.default.removeItem(at: fileURL)
-            }
-        } catch  { print(error) } */
-        
-        // /var/mobile/Containers/Data/Application/A1916161-D3BC-4613-8FAA-FE16A0C37DFD/Documents
         
         let fileMngr = FileManager.default
-        //let path = Bundle.main.resourcePath!
         let docs = fileMngr.urls(for: .documentDirectory, in: .userDomainMask)[0].path
         let items = try! fileMngr.contentsOfDirectory(atPath:docs)
 
         for item in items {
             //print(item)
-            let _item  = item.suffix(3)
-            if _item == "png" {
-                print("Found a png")
-            } else {
-                fileArray.append(item)
-            }
+            fileArray.append(item)
         }
         
         /* Set Array to Alphabetical and Numerical Order */
@@ -112,14 +52,11 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath)
-        
         var content = cell.defaultContentConfiguration()
         
         content.text = fileArray[indexPath.row]
         content.textProperties.color = .systemBlue
         content.textProperties.font = UIFont.preferredFont(forTextStyle: .body)
-        //cell.textLabel!.text = fileArray[indexPath.row]
-        
         cell.contentConfiguration = content
         return cell
     }
@@ -129,13 +66,10 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
         let label = UILabel()
         label.frame = CGRect.init(x: 0, y: 0, width:headerView.frame.width-10, height: headerView.frame.height-10)
         label.text = "Saved Projects"
-        //label.font = .systemFont(ofSize: 28)
         label.font = UIFont.boldSystemFont(ofSize: 28)
         label.textAlignment = NSTextAlignment.center
         label.textColor = .black
         label.backgroundColor = .systemOrange
-        
-
         headerView.addSubview(label)
             
         return headerView
@@ -151,7 +85,6 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
 
         let row = indexPath.row
         self.tryfileEdit = fileArray[row]
-        //print("User selected: \(fileArray[row])")
     
         let selectedCell:UITableViewCell = tableView.cellForRow(at: indexPath)!
         
@@ -165,8 +98,7 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
                 cell.isHighlighted = false
             }
         }
-        //deleteBtn.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        print(hidecell)
+
         if (hidecell == true){
             selectedCell.isHidden = true
             let point = myTableView.convert(CGPoint.zero, to: tableView)
@@ -176,26 +108,19 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
             myTableView.deleteRows(at: [IndexPath(row: indexpath.row, section: 0)], with: .automatic)
             myTableView.endUpdates()
             hidecell = false
-            print("HERE")
         }
-        //selectedCell.isSelected = true
-        //selectedCell.contentView.backgroundColor = UIColor.white
-        
     }
     
-    /* FIXME: START*/
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
          
          if editingStyle == .delete {
-             print("FILE: \(fileArray[indexPath.row])")
              tryfileDelete = fileArray[indexPath.row]
              deleteBTN()
              fileArray.remove(at: indexPath.row)
              myTableView.deleteRows(at: [indexPath], with: .automatic)
-             //deleteBTN()
          }
      }
-     // terms is array var
+
     
     
     @IBAction func editBTN(_ sender: Any) {
@@ -203,7 +128,6 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func deleteBTN() {
-        print("Button tapped")
         hidecell = true
         let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         let fileURL = URL(fileURLWithPath: tryfileDelete, relativeTo: directoryURL)
@@ -212,8 +136,6 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
             do {
                 
                 try FileManager.default.removeItem(at: fileURL)
-                
-                //print("Delete \(tryfile)")
             } catch {
                 // Catch any errors
                 print(error.localizedDescription)
@@ -224,36 +146,10 @@ class SavedProjectsViewController: UIViewController, UITableViewDelegate, UITabl
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
         }
-        
+        hidecell = false
     }
-    
-    /*@objc func buttonAction(sender: UIButton!) {
-        print("Button tapped")
-        hidecell = true
-        let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let fileURL = URL(fileURLWithPath: tryfile, relativeTo: directoryURL)
-        
-        if (tryfile != ""){
-            do {
-                
-                try FileManager.default.removeItem(at: fileURL)
-                
-                //print("Delete \(tryfile)")
-            } catch {
-                // Catch any errors
-                print(error.localizedDescription)
-            }
-        } else {
-            let alert = UIAlertController(title: "Deleting", message: "No project selected yet", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Okay", style: .default, handler: nil)
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
-        }
-    }*/
-    
-    
+ 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if(segue.identifier == "LoadedView"){
             let vc = segue.destination as! LoadedProjectViewController
             vc._projectName = self.tryfileEdit
