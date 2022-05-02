@@ -68,6 +68,12 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="QC4-Lr-pfE" firstAttribute="leading" secondItem="hzk-ju-zXI" secondAttribute="leading" id="Gr4-5G-WgK"/>
+                                    <constraint firstAttribute="trailing" secondItem="QC4-Lr-pfE" secondAttribute="trailing" id="InJ-1e-vSQ"/>
+                                    <constraint firstAttribute="trailing" secondItem="Y0q-Mi-Pst" secondAttribute="trailing" id="U7X-ms-fRp"/>
+                                    <constraint firstItem="Y0q-Mi-Pst" firstAttribute="leading" secondItem="hzk-ju-zXI" secondAttribute="leading" id="wFG-3w-D4M"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -178,33 +184,16 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cc9-wc-I9e">
-                                <rect key="frame" x="706" y="86" width="185" height="336.5"/>
+                                <rect key="frame" x="706" y="86" width="185" height="333.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2lu-TB-hVW">
-                                        <rect key="frame" x="0.0" y="0.0" width="185" height="336.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="185" height="333.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="HVf-MA-UxR">
                                                 <rect key="frame" x="0.0" y="0.0" width="185" height="30"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ggG-vU-K1Q">
-                                                        <rect key="frame" x="0.0" y="0.0" width="92.5" height="30"/>
-                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal">
-                                                            <imageReference key="image" image="square.and.arrow.down" catalog="system" symbolScale="large"/>
-                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
-                                                        </state>
-                                                        <state key="highlighted" title="Saved!">
-                                                            <color key="titleColor" systemColor="systemGreenColor"/>
-                                                            <color key="titleShadowColor" systemColor="labelColor"/>
-                                                            <imageReference key="image" image="square.and.arrow.down.fill" catalog="system" symbolScale="large"/>
-                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="toCameraRoll:" destination="zJV-MV-YMB" eventType="touchUpInside" id="rG1-vy-Q7V"/>
-                                                        </connections>
-                                                    </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t7z-xQ-I5w">
-                                                        <rect key="frame" x="92.5" y="0.0" width="92.5" height="30"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="185" height="30"/>
                                                         <color key="backgroundColor" name="AccentColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -316,24 +305,10 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="wOi-hW-xQd">
-                                                <rect key="frame" x="0.0" y="183" width="185" height="153.5"/>
+                                                <rect key="frame" x="0.0" y="183" width="185" height="150.5"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MiD-gx-fgo">
-                                                        <rect key="frame" x="0.0" y="0.0" width="185" height="30"/>
-                                                        <color key="backgroundColor" systemColor="systemGreenColor"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" title="Update Icon"/>
-                                                        <state key="selected" title="Updated"/>
-                                                        <state key="highlighted" title="Update Icon">
-                                                            <color key="titleColor" systemColor="systemGreenColor"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="updateIcon:" destination="zJV-MV-YMB" eventType="touchUpInside" id="jQw-jh-VzW"/>
-                                                        </connections>
-                                                    </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FyU-6G-5kX">
-                                                        <rect key="frame" x="0.0" y="38" width="185" height="30"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="185" height="30"/>
                                                         <color key="backgroundColor" systemColor="systemRedColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -346,8 +321,27 @@
                                                             <action selector="deleteIcon:" destination="zJV-MV-YMB" eventType="touchUpInside" id="l80-GD-3pO"/>
                                                         </connections>
                                                     </button>
+                                                    <button opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ggG-vU-K1Q">
+                                                        <rect key="frame" x="0.0" y="38" width="185" height="27"/>
+                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="Save to Camera Roll">
+                                                            <color key="titleColor" name="AccentColor"/>
+                                                            <imageReference key="image" image="square.and.arrow.down" catalog="system" symbolScale="large"/>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
+                                                        </state>
+                                                        <state key="highlighted" title="Saved!">
+                                                            <color key="titleColor" systemColor="systemGreenColor"/>
+                                                            <color key="titleShadowColor" systemColor="labelColor"/>
+                                                            <imageReference key="image" image="square.and.arrow.down.fill" catalog="system" symbolScale="large"/>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="toCameraRoll:" destination="zJV-MV-YMB" eventType="touchUpInside" id="rG1-vy-Q7V"/>
+                                                        </connections>
+                                                    </button>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UtR-Tl-TMH">
-                                                        <rect key="frame" x="0.0" y="76" width="185" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="73" width="185" height="20.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c8C-pv-Bz5">
                                                                 <rect key="frame" x="0.0" y="0.0" width="72" height="20.5"/>
@@ -364,7 +358,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2aD-rj-hpb">
-                                                        <rect key="frame" x="0.0" y="104.5" width="185" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="101.5" width="185" height="20.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gNk-vk-rXs">
                                                                 <rect key="frame" x="0.0" y="0.0" width="42" height="20.5"/>
@@ -381,7 +375,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pvX-8l-lv5">
-                                                        <rect key="frame" x="0.0" y="133" width="185" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="130" width="185" height="20.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HKz-OL-ex9">
                                                                 <rect key="frame" x="0.0" y="0.0" width="70" height="20.5"/>
@@ -577,33 +571,16 @@
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tyj-ja-RbF">
-                                <rect key="frame" x="706" y="86" width="185" height="336.5"/>
+                                <rect key="frame" x="706" y="86" width="185" height="333.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="VDu-Y1-79F">
-                                        <rect key="frame" x="0.0" y="0.0" width="185" height="336.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="185" height="333.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="t1j-W8-cdx">
                                                 <rect key="frame" x="0.0" y="0.0" width="185" height="30"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iRp-cx-6PL">
-                                                        <rect key="frame" x="0.0" y="0.0" width="92.5" height="30"/>
-                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal">
-                                                            <imageReference key="image" image="square.and.arrow.down" catalog="system" symbolScale="large"/>
-                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
-                                                        </state>
-                                                        <state key="highlighted" title="Saved!">
-                                                            <color key="titleColor" systemColor="systemGreenColor"/>
-                                                            <color key="titleShadowColor" systemColor="labelColor"/>
-                                                            <imageReference key="image" image="square.and.arrow.down.fill" catalog="system" symbolScale="large"/>
-                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="toCameraRoll:" destination="52a-3b-6dT" eventType="touchUpInside" id="O33-UN-w0W"/>
-                                                        </connections>
-                                                    </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1nN-Pb-rKO">
-                                                        <rect key="frame" x="92.5" y="0.0" width="92.5" height="30"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="185" height="30"/>
                                                         <color key="backgroundColor" name="AccentColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -715,24 +692,10 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="FzC-av-AX0">
-                                                <rect key="frame" x="0.0" y="183" width="185" height="153.5"/>
+                                                <rect key="frame" x="0.0" y="183" width="185" height="150.5"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SRh-Uw-sQu">
-                                                        <rect key="frame" x="0.0" y="0.0" width="185" height="30"/>
-                                                        <color key="backgroundColor" systemColor="systemGreenColor"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" title="Update Icon"/>
-                                                        <state key="selected" title="Updated"/>
-                                                        <state key="highlighted" title="Update Icon">
-                                                            <color key="titleColor" systemColor="systemGreenColor"/>
-                                                        </state>
-                                                        <connections>
-                                                            <action selector="updateIcon:" destination="52a-3b-6dT" eventType="touchUpInside" id="Ivh-Af-dpn"/>
-                                                        </connections>
-                                                    </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uoW-hI-w84">
-                                                        <rect key="frame" x="0.0" y="38" width="185" height="30"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="185" height="30"/>
                                                         <color key="backgroundColor" systemColor="systemRedColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -745,8 +708,25 @@
                                                             <action selector="deleteIcon:" destination="52a-3b-6dT" eventType="touchUpInside" id="Liv-6Y-gIz"/>
                                                         </connections>
                                                     </button>
+                                                    <button opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iRp-cx-6PL">
+                                                        <rect key="frame" x="0.0" y="38" width="185" height="27"/>
+                                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="13"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="Save to Camera Roll">
+                                                            <color key="titleColor" name="AccentColor"/>
+                                                            <imageReference key="image" image="square.and.arrow.down" catalog="system" symbolScale="large"/>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
+                                                        </state>
+                                                        <state key="highlighted">
+                                                            <imageReference key="image" image="square.and.arrow.down.fill" catalog="system" symbolScale="large"/>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="toCameraRoll:" destination="52a-3b-6dT" eventType="touchUpInside" id="O33-UN-w0W"/>
+                                                        </connections>
+                                                    </button>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JwA-8Z-GzJ">
-                                                        <rect key="frame" x="0.0" y="76" width="185" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="73" width="185" height="20.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ckJ-Rh-MHg">
                                                                 <rect key="frame" x="0.0" y="0.0" width="72" height="20.5"/>
@@ -763,7 +743,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qDl-lJ-WS3">
-                                                        <rect key="frame" x="0.0" y="104.5" width="185" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="101.5" width="185" height="20.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JB8-lM-PnR">
                                                                 <rect key="frame" x="0.0" y="0.0" width="42" height="20.5"/>
@@ -780,7 +760,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bAt-50-eqX">
-                                                        <rect key="frame" x="0.0" y="133" width="185" height="20.5"/>
+                                                        <rect key="frame" x="0.0" y="130" width="185" height="20.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oCh-zr-JRO">
                                                                 <rect key="frame" x="0.0" y="0.0" width="70" height="20.5"/>
@@ -900,7 +880,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="p3A-v8-SWM"/>
+        <segue reference="0MM-ht-hF7"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="camera" catalog="system" width="128" height="94"/>
